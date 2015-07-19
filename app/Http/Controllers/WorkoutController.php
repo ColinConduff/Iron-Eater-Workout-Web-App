@@ -90,9 +90,15 @@ class WorkoutController extends Controller
      */
     public function edit($id)
     {
-        // $workout = Auth::user()->workouts()->findOrFail($id);
+        $workout = Auth::user()->workouts()->findOrFail($id);
 
-        // return view('workouts.edit', compact('workout'));
+        $currentSessions = Session::with('exercise', 'sessionSets')
+            ->where('workout_id', '=', $workout->id)
+            ->where('session_date', '>', Carbon::today())
+            ->orderBy('session_date', 'desc')
+            ->get();
+
+        return view('workouts.edit', compact('workout', 'currentSessions'));
     }
 
     /**
@@ -103,11 +109,11 @@ class WorkoutController extends Controller
      */
     public function update($id,  Requests\WorkoutRequest $request)
     {
-        // $workout = Auth::user()->workouts()->findOrFail($id);
+        $workout = Auth::user()->workouts()->findOrFail($id);
 
-        // $workout->update($request->all());
+        $workout->update($request->all());
 
-        // return redirect()->action('WorkoutController@show', ['id' => $workout->id]);
+        return redirect()->action('WorkoutController@show', ['id' => $workout->id]);
     }
 
     /**
@@ -118,9 +124,9 @@ class WorkoutController extends Controller
      */
     public function destroy($id)
     {
-        // $workout = Auth::user()->workouts()->findOrFail($id);
-        // $workout->delete();
+        $workout = Auth::user()->workouts()->findOrFail($id);
+        $workout->delete();
 
-        // return view('dashboard');
+        return redirect()->action('DashboardController@displayDashboard');
     }
 }
