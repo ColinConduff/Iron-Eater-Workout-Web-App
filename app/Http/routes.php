@@ -36,6 +36,19 @@ Route::post('startNewWorkout', [
 	'uses' => 'SessionController@startNewWorkout'
 ]);
 
+Route::get('exercises/titleAsc', [
+	'middleware' => 'auth', 
+	'uses' => 'ExerciseController@sortTitleAsc'
+]);
+
+Route::get('exercises/titleDesc', [
+	'middleware' => 'auth', 
+	'uses' => 'ExerciseController@sortTitleDesc'
+]);
+
+Route::get('exercises/type/{type}', 'ExerciseController@filterByType');
+Route::get('exercises/category/{category}', 'ExerciseController@filterByCategory');
+
 Route::resource('exercises', 'ExerciseController');
 Route::resource('workouts', 'WorkoutController');
 Route::resource('sessions', 'SessionController');

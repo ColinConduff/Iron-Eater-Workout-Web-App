@@ -61,7 +61,8 @@ class ExerciseController extends Controller
      */
     public function show($id)
     {
-        $exercise = Auth::user()->exercises()->findOrFail($id);
+        $exercise = Auth::user()->exercises()->with('sessions.sessionSets')
+            ->findOrFail($id);
 
         return view('exercises.showOne', compact('exercise'));
     }
@@ -91,7 +92,7 @@ class ExerciseController extends Controller
 
         $exercise->update($request->all());
 
-        return redirect('exercises');
+        return redirect()->action('ExerciseController@show', [$exercise->id]);
     }
 
     /**
@@ -107,4 +108,55 @@ class ExerciseController extends Controller
 
         return redirect('exercises');
     }
+
+    public function sortTitleAsc()
+    {
+        $exercises = Auth::user()->exercises()
+            ->orderBy('title','asc')->get();
+
+        return view('exercises.showAll', compact('exercises'));
+    }
+
+    public function sortTitleDesc()
+    {
+        $exercises = Auth::user()->exercises()
+            ->orderBy('title','desc')->get();
+
+        return view('exercises.showAll', compact('exercises'));
+    }
+
+    public function filterByType($type)
+    {
+        $exercises = Auth::user()->exercises()
+            ->where('type', '=', $type)->get();
+
+        return view('exercises.showAll', compact('exercises'));
+    }
+
+    public function filterByCategory($category)
+    {
+        $exercises = Auth::user()->exercises()
+            ->where('category', '=', $category)->get();
+
+        return view('exercises.showAll', compact('exercises'));
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

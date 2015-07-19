@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<h1 class="text-center">
 			Workout: {{ $workout->title }} 
-			<a href="{{ url('edit', [$workout->id]) }}" class="btn btn-default">
+			<a href="{{ url('workouts', [$workout->id, 'edit']) }}" class="btn btn-default">
 				Edit
 			</a>
 		</h1>

@@ -25,8 +25,8 @@ class ExerciseRequest extends Request
     {
         return [
             'title' => 'required',
-            'type' => 'required|in:array([Cardio,Weighted,Bodyweight,Yoga])',
-            'category' => 'required|in:array([Chest,Back,Triceps,Biceps,Legs,Shoulders,Full Body])'
+            'type' => 'required|in:array([ ,Cardio,Weighted,Bodyweight,Yoga, ])',
+            'category' => 'required|in:array([ ,Chest,Back,Triceps,Biceps,Legs,Shoulders,FullBody, ])'
         ];
     }
 }
