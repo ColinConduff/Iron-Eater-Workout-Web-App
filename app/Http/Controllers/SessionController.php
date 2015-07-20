@@ -110,9 +110,11 @@ class SessionController extends Controller
     {
         $session = Auth::user()->sessions()->findOrFail($id);
 
+        $session->exercise_id = $request->input('id');
+
         $session->update($request->all());
 
-        return redirect('sessions');
+        return redirect()->action('WorkoutController@show', ['id' => $request->workout_id]);
     }
 
     /**

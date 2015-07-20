@@ -76,7 +76,8 @@ class WorkoutController extends Controller
             ->orderBy('session_date', 'desc')
             ->get();
 
-        $exercises = Exercise::select('exercises.id', 'exercises.title')
+        $exercises = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
             ->lists('title', 'id');
 
         return view('workouts.showOne', compact('workout', 'pastSessions', 'currentSessions', 'exercises'));
@@ -98,7 +99,11 @@ class WorkoutController extends Controller
             ->orderBy('session_date', 'desc')
             ->get();
 
-        return view('workouts.edit', compact('workout', 'currentSessions'));
+        $exerciseList = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        return view('workouts.edit', compact('workout', 'currentSessions', 'exerciseList'));
     }
 
     /**

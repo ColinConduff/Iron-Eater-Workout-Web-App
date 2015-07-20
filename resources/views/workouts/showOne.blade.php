@@ -14,63 +14,61 @@
 		<h3 class="text-center">Current Sessions</h3>
 			@foreach ($currentSessions as $Session)
 			<div class="row">
-					<div class="col-sm-5 text-center">
-						<h5>
-							{{ $Session->exercise->title }} -
-							<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
-						</h5>
-					@if( $Session->sessionSets->count() )
+				<div class="col-sm-10 text-center">
+					<h5>
+						{{ $Session->exercise->title }} -
+						<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
+					</h5>
+				@if( $Session->sessionSets->count() )
+					<table class="table text-center">	
+						<tr>
+							<th>#</th>
+							<th>Reps</th>
+							<th>lbs</th>
+							<th>One Rep Max</th>
+							<th>Time</th>
+						</tr>
 						@foreach ($Session->sessionSets as $index => $sessionSet)
-								<div class="col-sm-12">{{ $index+1 }}:
-								{{ $sessionSet->number_of_reps }} reps X
-								{{ $sessionSet->weight_lifted }} lbs |
-								1 rep max: {{ $sessionSet->one_rep_max }} |
-								{{ date('g:i:s', strtotime($sessionSet->created_at)) }}</div>
+							<tr>
+							<td>{{ $index+1 }}</td>
+							<td>{{ $sessionSet->number_of_reps }}</td>
+							<td>{{ $sessionSet->weight_lifted }}</td>
+							<td>{{ $sessionSet->one_rep_max }}</td>
+							<td>{{ date('g:i:s', strtotime($sessionSet->created_at)) }}</td>
+							</tr>
 						@endforeach
-					@endif
+					</table>
+				@endif
+				</div>
+
+				<div class="col-sm-2">
+					<div class="row">
+					@include('errors.list')
+					{!! Form::open(['action' => 'SessionSetController@store']) !!}
+
+					<div hidden=true class="form-group">
+						{!! Form::text('session_id', $Session->id, ['class' => 'form-control']) !!}
 					</div>
 
-					<div class="col-sm-5">
-						<div class="row">
-						@include('errors.list')
-						{!! Form::open(['action' => 'SessionSetController@store']) !!}
-
-						<div hidden=true class="form-group">
-							{!! Form::text('session_id', $Session->id, ['class' => 'form-control']) !!}
-						</div>
-
-						<div hidden=true class="form-group">
-							{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
-						</div>
-
-						<div class="form-group col-sm-4 col-xs-6">
-							{!! Form::text('number_of_reps', null, ['class' => 'form-control', 'placeholder' => "Reps"]) !!}
-						</div>
-
-						<div class="form-group col-sm-4 col-xs-6">
-							{!! Form::text('weight_lifted', null, ['class' => 'form-control', 'placeholder' => "lbs"]) !!}
-						</div>
-
-						<div class="form-group col-sm-4 col-xs-12">
-							{!! Form::submit('Add Set', ['class' => 'btn btn-primary form-control']) !!}
-						</div>
-
-						{!! Form::close() !!}
-						</div>
+					<div hidden=true class="form-group">
+						{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
 					</div>
 
-					<div class="col-sm-1 col-xs-6 text-center">
-						<a href="{{ url('sessions', [$Session->id, 'edit']) }}" class="btn btn-info">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-						</a>
+					<div class="form-group col-sm-12 col-xs-4">
+						{!! Form::text('number_of_reps', null, ['class' => 'form-control', 'placeholder' => "Reps"]) !!}
 					</div>
 
-					<div class="col-sm-1 col-xs-6 text-center">
-						{!! Form::open(array('url' => 'sessions/' . $Session->id)) !!}
-		                    {!! Form::hidden('_method', 'DELETE') !!}
-		                    {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', array('type' => 'submit', 'class' => 'btn btn-danger')) !!}
-		                {!! Form::close() !!}
-	                </div>
+					<div class="form-group col-sm-12 col-xs-4">
+						{!! Form::text('weight_lifted', null, ['class' => 'form-control', 'placeholder' => "lbs"]) !!}
+					</div>
+
+					<div class="form-group col-sm-12 col-xs-4">
+						{!! Form::submit('Add Set', ['class' => 'btn btn-primary form-control']) !!}
+					</div>
+
+					{!! Form::close() !!}
+					</div>
+				</div>
 	        </div>
 			@endforeach
 
@@ -99,23 +97,33 @@
 		@else
 		<h3 class="text-center">Start a new workout session</h3>
 
-		@if(count($pastSessions))
-			@include('errors.list')
+			{{--
+				If there are past sessions, get the exercises used
+				in the past to create several new sessions at once 
+			--}}
 
-			{!! Form::open(['action' => 'SessionController@startNewWorkout']) !!}
+			@if(count($pastSessions))
+				@include('errors.list')
 
-			<div hidden=true class="form-group">
-				{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
-			</div>
+				{!! Form::open(['action' => 'SessionController@startNewWorkout']) !!}
 
-			<div class="form-group">
-				{!! Form::submit('Start a new workout session', ['class' => 'btn btn-primary form-control']) !!}
-			</div>
+				<div hidden=true class="form-group">
+					{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
+				</div>
 
-			{!! Form::close() !!}
-		@else
+				<div class="form-group">
+					{!! Form::submit('Start a new workout session', ['class' => 'btn btn-primary form-control']) !!}
+				</div>
 
-		@endif
+				{!! Form::close() !!}
+			@else
+
+			{{--
+				If there are no past sessions to generate a list of 
+				exercises from, then populate a multiple select input 
+				field to generate new sessions.
+			--}}
+			
 			@include('errors.list')
 
 			{!! Form::open(['url' => 'sessions']) !!}
@@ -137,6 +145,7 @@
 					placeholder: 'Choose exercises'
 				});
 			</script>
+			@endif
 		@endif
 		</div>
 
