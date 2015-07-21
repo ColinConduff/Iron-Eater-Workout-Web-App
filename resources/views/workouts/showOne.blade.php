@@ -1,13 +1,15 @@
 @extends('app')
 
 @section('content')
-	<div class="container-fluid">
-		<h1 class="text-center">
-			Workout: {{ $workout->title }} 
-			<a href="{{ url('workouts', [$workout->id, 'edit']) }}" class="btn btn-default">
+	<div class="container">
+		<div class="well container">
+			<h1 class="text-center">
+				Workout: {{ $workout->title }} 
+			</h1>
+			<a href="{{ url('workouts', [$workout->id, 'edit']) }}" class="btn btn-default btn-danger pull-right">
 				Edit
 			</a>
-		</h1>
+		</div>
 
 		<div class="well container">
 		@if(count($currentSessions))
@@ -34,7 +36,7 @@
 							<td>{{ $sessionSet->number_of_reps }}</td>
 							<td>{{ $sessionSet->weight_lifted }}</td>
 							<td>{{ $sessionSet->one_rep_max }}</td>
-							<td>{{ date('g:i:s', strtotime($sessionSet->created_at)) }}</td>
+							<td>{{ date('g:i:s a', strtotime($sessionSet->created_at)) }}</td>
 							</tr>
 						@endforeach
 					</table>
@@ -152,26 +154,33 @@
 
 		@if(count($pastSessions))
 		<div class="well container text-center">
-		<div class="row">
 		<h3>Past Sessions</h3>
 			@foreach ($pastSessions as $Session)
-					<div class="col-sm-6">
-						<h5>
-							{{ $Session->exercise->title }} -
-							<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
-						</h5>
-					@if( $Session->sessionSets->count() )
+					<h5>
+						{{ $Session->exercise->title }} -
+						<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
+					</h5>
+				@if( $Session->sessionSets->count() )
+					<table class="table text-center">	
+						<tr>
+							<th>#</th>
+							<th>Reps</th>
+							<th>lbs</th>
+							<th>One Rep Max</th>
+							<th>Time</th>
+						</tr>
 						@foreach ($Session->sessionSets as $index => $sessionSet)
-								<div class="col-sm-12">{{ $index+1 }}:
-								{{ $sessionSet->number_of_reps }} reps X
-								{{ $sessionSet->weight_lifted }} lbs |
-								1 rep max: {{ $sessionSet->one_rep_max }} |
-								{{ date('g:i:s', strtotime($sessionSet->created_at)) }}</div>
+							<tr>
+							<td>{{ $index+1 }}</td>
+							<td>{{ $sessionSet->number_of_reps }}</td>
+							<td>{{ $sessionSet->weight_lifted }}</td>
+							<td>{{ $sessionSet->one_rep_max }}</td>
+							<td>{{ date('g:i:s a', strtotime($sessionSet->created_at)) }}</td>
+							</tr>
 						@endforeach
-					@endif
-					</div>
+					</table>
+				@endif
 			@endforeach
-		</div>
 		</div>
 		@endif
 

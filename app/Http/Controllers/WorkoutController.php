@@ -17,6 +17,14 @@ use App\Http\Controllers\Controller;
 class WorkoutController extends Controller
 {
     /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return Response

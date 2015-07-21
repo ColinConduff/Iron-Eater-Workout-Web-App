@@ -49,10 +49,24 @@ Route::get('exercises/titleDesc', [
 Route::get('exercises/type/{type}', 'ExerciseController@filterByType');
 Route::get('exercises/category/{category}', 'ExerciseController@filterByCategory');
 
-Route::resource('exercises', 'ExerciseController');
-Route::resource('workouts', 'WorkoutController');
-Route::resource('sessions', 'SessionController');
-Route::resource('sessionSets', 'SessionSetController');
+Route::post('filterByExerciseTitle', [
+	'middleware' => 'auth', 
+	'uses' => 'SessionController@filterByExerciseTitle'
+]);
+
+Route::post('filterByWorkoutTitle', [
+	'middleware' => 'auth', 
+	'uses' => 'SessionController@filterByWorkoutTitle'
+]);
+
+Route::resource('exercises', 'ExerciseController', 
+	['except' => ['create']]);
+Route::resource('workouts', 'WorkoutController', 
+	['except' => ['index','create']]);
+Route::resource('sessions', 'SessionController', 
+	['except' => ['create']]);
+Route::resource('sessionSets', 'SessionSetController', 
+	['except' => ['index','create','show','edit']]);
 
 // Authentication routes... 
 Route::get('auth/login', 'Auth\AuthController@getLogin');

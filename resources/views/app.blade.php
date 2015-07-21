@@ -3,10 +3,15 @@
 <head>
     <meta charset= "UTF-8" >
     <title>IronEater</title>
+
+    {!! Html::style('assets/vendor/bootstrap/dist/css/bootstrap.min.css') !!}
+
+    {!! Html::style('assets/vendor/font-awesome/css/font-awesome.min.css') !!}
+
+    {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
+    {!! Html::script('/assets/vendor/bootstrap/dist/js/bootstrap.min.js'); !!}
+    {!! Html::script('/assets/vendor/jquery.countdown/dist/jquery.countdown.min.js'); !!}
     
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 

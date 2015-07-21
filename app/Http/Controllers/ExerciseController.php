@@ -12,6 +12,14 @@ use App\Http\Controllers\Controller;
 class ExerciseController extends Controller
 {
     /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
@@ -23,15 +31,15 @@ class ExerciseController extends Controller
         return view('exercises.showAll', compact('exercises'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('exercises.create');
-    }
+    // *
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return Response
+     
+    // public function create()
+    // {
+    //     return view('exercises.create');
+    // }
 
     /**
      * Store a newly created resource in storage.

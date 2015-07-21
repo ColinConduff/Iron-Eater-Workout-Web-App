@@ -15,24 +15,87 @@ use App\Http\Controllers\Controller;
 class SessionController extends Controller
 {
     /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
      */
     public function index()
     {
-        //
+        $sessions = Auth::user()->sessions()
+            ->with('workout', 'exercise', 'sessionSets')
+            ->orderBy('session_date', 'desc')
+            ->get();
+
+        $exerciseList = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        $workoutList = Auth::user()->workouts()
+            ->select('workouts.id', 'workouts.title')
+            ->lists('title', 'id');
+
+        return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function filterByExerciseTitle(Request $request)
     {
-        //
+        $exerciseID = $request->input('id');
+
+        $sessions = Auth::user()->sessions()
+            ->with('workout', 'exercise', 'sessionSets')
+            ->where('exercise_id', '=', $exerciseID)
+            ->orderBy('session_date', 'desc')
+            ->get();
+
+        $exerciseList = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        $workoutList = Auth::user()->workouts()
+            ->select('workouts.id', 'workouts.title')
+            ->lists('title', 'id');
+
+        return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
+
+    public function filterByWorkoutTitle(Request $request)
+    {
+        $workoutID = $request->input('id');
+
+        $sessions = Auth::user()->sessions()
+            ->with('workout', 'exercise', 'sessionSets')
+            ->where('workout_id', '=', $workoutID)
+            ->orderBy('session_date', 'desc')
+            ->get();
+
+        $exerciseList = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        $workoutList = Auth::user()->workouts()
+            ->select('workouts.id', 'workouts.title')
+            ->lists('title', 'id');
+
+        return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
+    }
+
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return Response
+    //  */
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -84,7 +147,9 @@ class SessionController extends Controller
      */
     public function show($id)
     {
-        //
+        $session = Auth::user()->sessions()->findOrFail($id);
+
+        return view('sessions.showOne', compact('session'));
     }
 
     /**
@@ -97,7 +162,11 @@ class SessionController extends Controller
     {
         $session = Auth::user()->sessions()->findOrFail($id);
 
-        return view('sessions.edit', compact('session'));
+        $exercises = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        return view('sessions.edit', compact('session', 'exercises'));
     }
 
     /**
