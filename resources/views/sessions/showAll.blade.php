@@ -82,6 +82,7 @@
 			@endif
 			</div>
 		@endforeach
+		{!! $sessions->render() !!}
 	@endif
 	</div>
 

@@ -2,42 +2,44 @@
 
 @section('content')
 	<div class="container">
+		<div class="well text-center"><h1>{{ $exercise->title }}</h1></div>
+		
 		<div class="row text-center">
-			<div class="well"><h1>{{ $exercise->title }}</h1></div>
-		</div>
-
-		<div class="well row text-center">
 			<div class="col-xs-12 col-sm-4">
-				<h3>Type: <small>{{ $exercise->type }}</small></h3>
+				<h3 class="well">Type: <small>{{ $exercise->type }}</small></h3>
 			</div>
 			<div class="col-xs-12 col-sm-4">
-				<h3>Category: <small>{{ $exercise->category }}</small></h3>
+				<h3 class="well">Category: <small>{{ $exercise->category }}</small></h3>
 			</div>
 			<div class="col-xs-12 col-sm-4">
-				<h3>Best One Rep Max: <small>{{ $exercise->best_one_rep_max }}</small></h3>
+				<h3 class="well">Best One Rep Max: <small>{{ $exercise->best_one_rep_max }}</small></h3>
 			</div>
 		</div>
 
-		<div class="row" style="padding-bottom:2%">
-		<a href="{{ url('exercises', [$exercise->id, 'edit']) }}" class="btn btn-danger btn-block">
-			Edit
-		</a>
+		<div class="well">
+			<a href="{{ url('exercises', [$exercise->id, 'edit']) }}" class="btn btn-danger btn-block">
+				Edit
+			</a>
 		</div>
 
 		@if(count($exercise->sessions))	
-			<div class="well row text-center">
-			<h3>Exercise History</h3>		
+			<div class="well text-center">
+				<h3>Exercise History</h3>		
+			</div>
+
 			@foreach ($exercise->sessions as $session)
-				<div class="text-center">
-					<h5>{{ date('F d g:i:s', strtotime($session->session_date)) }}</h5>
+				<div class="panel panel-default text-center">
+					<div class="panel-heading">
+						<h5>{{ date('F d g:i:s', strtotime($session->session_date)) }}</h5>
+					</div>
 					@if( $session->sessionSets->count() )
-						<table class="table">
+						<table class="table table-striped">
 							<tr>
-							<th>Index</th>
-							<th>Reps</th>
-							<th>lbs</th>
-							<th>One Rep Max</th>
-							<th>Time</th>
+								<td>Index</td>
+								<td>Reps</td>
+								<td>lbs</td>
+								<td>One Rep Max</td>
+								<td>Time</td>
 							</tr>
 						@foreach ($session->sessionSets as $index => $sessionSet)
 								<tr>

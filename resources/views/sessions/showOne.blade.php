@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="container text-center">
-	<div class="well"><h1>Sessions</h1></div>
+	<div class="well"><h1>Session</h1></div>
 
 		<div class="panel panel-default text-center">
 			<div class="panel-heading">

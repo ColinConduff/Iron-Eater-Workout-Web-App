@@ -32,7 +32,7 @@ class SessionController extends Controller
         $sessions = Auth::user()->sessions()
             ->with('workout', 'exercise', 'sessionSets')
             ->orderBy('session_date', 'desc')
-            ->get();
+            ->paginate(10);
 
         $exerciseList = Auth::user()->exercises()
             ->select('exercises.id', 'exercises.title')

@@ -2,33 +2,33 @@
 
 @section('content')
 	<div class="container">
-		<div class="well container">
-			<h1 class="text-center">
-				Workout: {{ $workout->title }} 
-			</h1>
-			<a href="{{ url('workouts', [$workout->id, 'edit']) }}" class="btn btn-default btn-danger pull-right">
-				Edit
-			</a>
+		<div class="well">
+			<h1 class="text-center">{{ $workout->title }}</h1>
 		</div>
 
-		<div class="well container">
+		<div>@include('errors.list')</div>
+		
 		@if(count($currentSessions))
-		<h3 class="text-center">Current Sessions</h3>
+			<div class="well">
+			<div class="well" style="background-color:#E6E6E6"><h3 class="text-center">Current Sessions</h3></div>
 			@foreach ($currentSessions as $Session)
 			<div class="row">
-				<div class="col-sm-10 text-center">
-					<h5>
-						{{ $Session->exercise->title }} -
-						<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
-					</h5>
+				<div class="col-sm-9 text-center">
+				<div class="panel panel-default text-center">
+					<div class="panel-heading" style="background-color:#E6E6E6">
+						<h5>
+							{{ $Session->exercise->title }} -
+							<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
+						</h5>
+					</div>
 				@if( $Session->sessionSets->count() )
-					<table class="table text-center">	
+					<table class="table table-striped text-center">	
 						<tr>
-							<th>#</th>
-							<th>Reps</th>
-							<th>lbs</th>
-							<th>One Rep Max</th>
-							<th>Time</th>
+							<td>#</td>
+							<td>Reps</td>
+							<td>lbs</td>
+							<td>One Rep Max</td>
+							<td>Time</td>
 						</tr>
 						@foreach ($Session->sessionSets as $index => $sessionSet)
 							<tr>
@@ -42,10 +42,11 @@
 					</table>
 				@endif
 				</div>
+				</div>
 
-				<div class="col-sm-2">
+				<div class="col-sm-3">
+					<div class="well" style="background-color:#E6E6E6">
 					<div class="row">
-					@include('errors.list')
 					{!! Form::open(['action' => 'SessionSetController@store']) !!}
 
 					<div hidden=true class="form-group">
@@ -70,25 +71,28 @@
 
 					{!! Form::close() !!}
 					</div>
+					</div>
 				</div>
 	        </div>
 			@endforeach
 
-			@include('errors.list')
+			<div class="well" style="background-color:#E6E6E6">
+				{!! Form::open(['url' => 'sessions']) !!}
+				    <div hidden=true class="form-group">
+						{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
+					</div>
 
-			{!! Form::open(['url' => 'sessions']) !!}
-			    <div hidden=true class="form-group">
-					{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
-				</div>
+				    <div class="form-group">
+					    {!! Form::select('id[]', $exercises, null, ['id' => 'exercise_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
+					</div>
 
-			    <div class="form-group">
-				    {!! Form::select('id[]', $exercises, null, ['id' => 'exercise_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
-				</div>
+					<div class="form-group">
+						{!! Form::submit('Add Session', ['class' => 'btn btn-primary form-control']) !!}
+					</div>
+				{!! Form::close() !!}
+			</div>
 
-				<div class="form-group">
-					{!! Form::submit('Add Session', ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-			{!! Form::close() !!}
+			</div>
 
 			<script>
 				$('#exercise_list').select2({
@@ -97,16 +101,14 @@
 			</script>
 
 		@else
-		<h3 class="text-center">Start a new workout session</h3>
-
 			{{--
 				If there are past sessions, get the exercises used
-				in the past to create several new sessions at once 
+				in the past to create several new sessions at one time
 			--}}
 
 			@if(count($pastSessions))
-				@include('errors.list')
 
+				<div class="well">
 				{!! Form::open(['action' => 'SessionController@startNewWorkout']) !!}
 
 				<div hidden=true class="form-group">
@@ -118,58 +120,70 @@
 				</div>
 
 				{!! Form::close() !!}
+				</div>
+
 			@else
 
-			{{--
-				If there are no past sessions to generate a list of 
-				exercises from, then populate a multiple select input 
-				field to generate new sessions.
-			--}}
-			
-			@include('errors.list')
+				{{--
+					If there are no past sessions to generate a list of 
+					exercises from, then populate a multiple select input 
+					field to generate new sessions.
+				--}}
 
-			{!! Form::open(['url' => 'sessions']) !!}
-			    <div hidden=true class="form-group">
-					{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
+				<div class="well">
+
+				{!! Form::open(['url' => 'sessions']) !!}
+				    <div hidden=true class="form-group">
+						{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
+					</div>
+
+				    <div class="form-group">
+					    {!! Form::select('id[]', $exercises, null, ['id' => 'exercise_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
+					</div>
+
+					<div class="form-group">
+						{!! Form::submit('Add Session', ['class' => 'btn btn-primary form-control']) !!}
+					</div>
+				{!! Form::close() !!}
 				</div>
 
-			    <div class="form-group">
-				    {!! Form::select('id[]', $exercises, null, ['id' => 'exercise_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
-				</div>
-
-				<div class="form-group">
-					{!! Form::submit('Add Session', ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-			{!! Form::close() !!}
-
-			<script>
-				$('#exercise_list').select2({
-					placeholder: 'Choose exercises'
-				});
-			</script>
+				<script>
+					$('#exercise_list').select2({
+						placeholder: 'Choose exercises'
+					});
+				</script>
 			@endif
 		@endif
-		</div>
 
+
+		{{-- Displays the workout sessions from the past week --}}
 
 		@if(count($pastSessions))
-		<div class="well container text-center">
-		<h3>Past Sessions</h3>
-			@foreach ($pastSessions as $Session)
-					<h5>
-						{{ $Session->exercise->title }} -
-						<small>{{ date('F d g:i:s', strtotime($Session->session_date)) }}</small>
-					</h5>
-				@if( $Session->sessionSets->count() )
-					<table class="table text-center">	
+			<div class="well text-center">
+			<div class="well" style="background-color:#E6E6E6"><h3>Past Sessions</h3></div>
+			
+			@foreach ($pastSessions as $session)
+				<div class="panel panel-default text-center">
+					<div class="panel-heading" style="background-color:#E6E6E6">
+					<div class="row">
+						<div class="col-xs-12">
+							<h5><a href="{{ url('sessions', [$session->id]) }}" class="btn btn-default btn-block">
+								{{ $session->exercise->title }}
+							</a></h5>
+							<h6>{{ date('l, F d \a\t g:i:s a', strtotime($session->session_date)) }}</h6>
+						</div>
+					</div>
+					</div>
+				@if( $session->sessionSets->count() )
+					<table class="table table-striped text-center">	
 						<tr>
-							<th>#</th>
-							<th>Reps</th>
-							<th>lbs</th>
-							<th>One Rep Max</th>
-							<th>Time</th>
+							<td>#</td>
+							<td>Reps</td>
+							<td>lbs</td>
+							<td>One Rep Max</td>
+							<td>Time</td>
 						</tr>
-						@foreach ($Session->sessionSets as $index => $sessionSet)
+						@foreach ($session->sessionSets as $index => $sessionSet)
 							<tr>
 							<td>{{ $index+1 }}</td>
 							<td>{{ $sessionSet->number_of_reps }}</td>
@@ -180,15 +194,13 @@
 						@endforeach
 					</table>
 				@endif
+				</div>
 			@endforeach
-		</div>
+			{!! $pastSessions->render() !!}
+			</div>
 		@endif
 
-		<div class="well container">
-			<h3 class="text-center">Note</h3>
-
-			@include('errors.list')
-
+		<div class="well">
 			{!! Form::model($workout, ['method' => 'PATCH', 'action' => ['WorkoutController@update', $workout->id]]) !!}
 			<div hidden=true class="form-group">
 				{!! Form::text('title', $workout->title, ['class' => 'form-control']) !!}
@@ -203,6 +215,12 @@
 			</div>
 			{!! Form::close() !!}
 
+		</div>
+
+		<div class="well">
+			<a href="{{ url('workouts', [$workout->id, 'edit']) }}" class="btn btn-block btn-danger">
+				Edit Workout
+			</a>
 		</div>
 	</div>
 @stop

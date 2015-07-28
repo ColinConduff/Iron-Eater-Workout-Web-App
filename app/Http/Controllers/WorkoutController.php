@@ -76,7 +76,7 @@ class WorkoutController extends Controller
             ->where('workout_id', '=', $workout->id)
             ->where('session_date', '<', Carbon::today())
             ->orderBy('session_date', 'desc')
-            ->get();
+            ->paginate(4);
 
         $currentSessions = Session::with('exercise', 'sessionSets')
             ->where('workout_id', '=', $workout->id)
