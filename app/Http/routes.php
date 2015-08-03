@@ -51,10 +51,18 @@ Route::get('exercises/category/{category}', 'ExerciseController@filterByCategory
 
 Route::post('filterByExerciseTitle', [
 	'middleware' => 'auth', 
+	'uses' => 'SessionController@sendExerciseID'
+]);
+Route::get('filterByExerciseTitle/{id}', [
+	'middleware' => 'auth', 
 	'uses' => 'SessionController@filterByExerciseTitle'
 ]);
 
 Route::post('filterByWorkoutTitle', [
+	'middleware' => 'auth', 
+	'uses' => 'SessionController@sendWorkoutID'
+]);
+Route::get('filterByWorkoutTitle/{id}', [
 	'middleware' => 'auth', 
 	'uses' => 'SessionController@filterByWorkoutTitle'
 ]);

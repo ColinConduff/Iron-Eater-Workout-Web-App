@@ -2,6 +2,7 @@
 
 @section('content')
 	<div class="container">
+
 		<div class="well">
 			<h1 class="text-center">{{ $workout->title }}</h1>
 		</div>
@@ -11,6 +12,15 @@
 		@if(count($currentSessions))
 			<div class="well">
 			<div class="well" style="background-color:#E6E6E6"><h3 class="text-center">Current Sessions</h3></div>
+			
+			{!! Html::script('/assets/js/timerFunction.js') !!}
+
+			<div style="margin-bottom:1em" class="text-center">
+				<a class="btn btn-default thirtySec">30 Sec</a>
+				<a class="btn btn-default oneMin">1 Min</a>
+				<a class="btn btn-default twoMin">2 Min</a>
+			</div>
+
 			@foreach ($currentSessions as $Session)
 			<div class="row">
 				<div class="col-sm-9 text-center">

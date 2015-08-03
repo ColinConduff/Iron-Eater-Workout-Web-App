@@ -45,15 +45,20 @@ class SessionController extends Controller
         return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
 
-    public function filterByExerciseTitle(Request $request)
+    public function sendExerciseID(Request $request)
     {
         $exerciseID = $request->input('id');
 
+        return redirect()->action('SessionController@filterByExerciseTitle', [$exerciseID[0]]);
+    }
+
+    public function filterByExerciseTitle($exerciseID)
+    {
         $sessions = Auth::user()->sessions()
             ->with('workout', 'exercise', 'sessionSets')
             ->where('exercise_id', '=', $exerciseID)
             ->orderBy('session_date', 'desc')
-            ->get();
+            ->paginate(5);
 
         $exerciseList = Auth::user()->exercises()
             ->select('exercises.id', 'exercises.title')
@@ -66,6 +71,13 @@ class SessionController extends Controller
         return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
 
+    public function sendWorkoutID(Request $request)
+    {
+        $workoutID = $request->input('id');
+
+        return redirect()->action('SessionController@filterByExerciseTitle', [$workoutID[0]]);
+    }
+
     public function filterByWorkoutTitle(Request $request)
     {
         $workoutID = $request->input('id');
@@ -74,7 +86,7 @@ class SessionController extends Controller
             ->with('workout', 'exercise', 'sessionSets')
             ->where('workout_id', '=', $workoutID)
             ->orderBy('session_date', 'desc')
-            ->get();
+            ->paginate(5);
 
         $exerciseList = Auth::user()->exercises()
             ->select('exercises.id', 'exercises.title')

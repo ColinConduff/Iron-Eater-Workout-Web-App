@@ -6,13 +6,13 @@
 		
 		<div class="row text-center">
 			<div class="col-xs-12 col-sm-4">
-				<h3 class="well">Type: <small>{{ $exercise->type }}</small></h3>
+				<h5 class="well">Type: {{ $exercise->type }}</h5>
 			</div>
 			<div class="col-xs-12 col-sm-4">
-				<h3 class="well">Category: <small>{{ $exercise->category }}</small></h3>
+				<h5 class="well">Category: {{ $exercise->category }}</h5>
 			</div>
 			<div class="col-xs-12 col-sm-4">
-				<h3 class="well">Best One Rep Max: <small>{{ $exercise->best_one_rep_max }}</small></h3>
+				<h5 class="well">Best One Rep Max: {{ $exercise->best_one_rep_max }}</h5>
 			</div>
 		</div>
 
@@ -22,12 +22,12 @@
 			</a>
 		</div>
 
-		@if(count($exercise->sessions))	
+		@if(count($sessions))	
 			<div class="well text-center">
 				<h3>Exercise History</h3>		
 			</div>
 
-			@foreach ($exercise->sessions as $session)
+			@foreach ($sessions as $session)
 				<div class="panel panel-default text-center">
 					<div class="panel-heading">
 						<h5>{{ date('F d g:i:s', strtotime($session->session_date)) }}</h5>
@@ -57,6 +57,8 @@
 				</div>
 			@endforeach
 			</div>
+
+			<div class="text-center">{!! $sessions->render() !!}</div>
 		@endif
 		
 	</div>

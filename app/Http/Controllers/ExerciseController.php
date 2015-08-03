@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App\Exercise;
+use App\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -69,10 +70,12 @@ class ExerciseController extends Controller
      */
     public function show($id)
     {
-        $exercise = Auth::user()->exercises()->with('sessions.sessionSets')
-            ->findOrFail($id);
+        $exercise = Auth::user()->exercises()->findOrFail($id);
 
-        return view('exercises.showOne', compact('exercise'));
+        $sessions = Session::where('exercise_id', '=', $exercise->id)
+            ->orderBy('session_date', 'desc')->with('sessionSets')->paginate(2);
+
+        return view('exercises.showOne', compact('exercise', 'sessions'));
     }
 
     /**

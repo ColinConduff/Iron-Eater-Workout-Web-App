@@ -13,7 +13,7 @@
 		<div class="col-xs-6">
 		{{-- Exercise filter form --}}
 		
-			{!! Form::open(['action' => 'SessionController@filterByExerciseTitle']) !!}
+			{!! Form::open(['action' => 'SessionController@sendExerciseID']) !!}
 
 			<div class="form-group">
 			    {!! Form::select('id[]', $exerciseList, null, ['class' => 'form-control', 'style' => 'width:100%']) !!}
@@ -28,7 +28,7 @@
 
 		<div class="col-xs-6">
 		{{-- Workout filter form --}}
-			{!! Form::open(['action' => 'SessionController@filterByWorkoutTitle']) !!}
+			{!! Form::open(['action' => 'SessionController@sendWorkoutID']) !!}
 
 			<div class="form-group">
 			    {!! Form::select('id[]', $workoutList, null, ['class' => 'form-control', 'style' => 'width:100%']) !!}
