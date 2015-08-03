@@ -1,7 +1,7 @@
 # Iron Eater Weight Lifting App
 
 ## Demo
-https://iron-eater-workout-web-app.herokuapp.com/exercises
+https://iron-eater-workout-web-app.herokuapp.com
 
 ## Summary 
 * Users can add exercises and workouts
@@ -20,5 +20,5 @@ https://iron-eater-workout-web-app.herokuapp.com/exercises
 * The ER Diagram was created using www.draw.io
 
 ## ER Diagram
-![ER Diagram](IronEaterERDiagram.svg?raw=true "ER Diagram")
+![ER Diagram](IronEaterERDiagram.png?raw=true "ER Diagram")
 
