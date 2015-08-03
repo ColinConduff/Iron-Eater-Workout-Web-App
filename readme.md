@@ -20,5 +20,5 @@ https://iron-eater-workout-web-app.herokuapp.com
 * The ER Diagram was created using www.draw.io
 
 ## ER Diagram
-![ER Diagram](IronEaterERDiagram.png?raw=true "ER Diagram")
+![ER Diagram](IronEaterDiagram.png?raw=true "ER Diagram")
 
