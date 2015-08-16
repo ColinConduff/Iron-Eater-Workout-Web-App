@@ -30,7 +30,7 @@
 			@foreach ($sessions as $session)
 				<div class="panel panel-default text-center">
 					<div class="panel-heading">
-						<h5>{{ date('F d g:i:s', strtotime($session->session_date)) }}</h5>
+						<h5>{{ date('l, F d g:i a', strtotime($session->session_date)) }}</h5>
 					</div>
 					@if( $session->sessionSets->count() )
 						<table class="table table-striped">

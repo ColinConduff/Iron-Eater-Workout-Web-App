@@ -1,14 +1,17 @@
 @extends('app')
 
 @section('content')
-	<div class="container-fluid">
+	<div class="container">
 		<a href="{{ url('workouts', [$workout->id]) }}">Back</a>
-		<h1 class="text-center">
-			Workout: {{ $workout->title }} 
-		</h1>
+			
+		<div class="well">
+			<h1 class="text-center">
+				{{ $workout->title }} 
+			</h1>
+		</div>
 
 		@if(count($currentSessions))
-		<div class="well container">
+		<div class="well">
 		<h3 class="text-center">Current Sessions</h3>
 			@foreach ($currentSessions as $Session)
 				<hr style="border-color:black">
@@ -73,7 +76,7 @@
 		</div>
 		@endif
 
-		<div class="well container">
+		<div class="well">
 			<h3 class="text-center">Edit Workout Title and Note</h3>
 
 			@include('errors.list')
@@ -94,7 +97,7 @@
 
 		</div>
 
-		<div class="text-center well container">
+		<div class="text-center well">
 			{!! Form::open(array('url' => 'workouts/' . $workout->id)) !!}
                 {!! Form::hidden('_method', 'DELETE') !!}
                 {!! Form::button('Delete Workout', array('type' => 'submit', 'class' => 'btn btn-block btn-danger')) !!}

@@ -45,6 +45,7 @@
 			{!! Form::close() !!}
 		</div>
 
+
 		<div class="text-center well">
 			{!! Form::open(array('url' => 'exercises/' . $exercise->id)) !!}
                 {!! Form::hidden('_method', 'DELETE') !!}

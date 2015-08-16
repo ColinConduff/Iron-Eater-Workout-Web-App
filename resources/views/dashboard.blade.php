@@ -13,15 +13,6 @@
 			</div>
 		@endif
 
-		<script>
-			$('document').ready(function() {
-  				$('.createWkForm').on('click', function () {
-  					$('.WkForm').removeClass('hidden');
-  					$('.hideWell').addClass('hidden');
-  				});
-  			});
-		</script>
-
 		<div class="well hideWell">
 			<button class="btn btn-default btn-primary btn-block createWkForm">Create a New Workout</button>
 		</div>

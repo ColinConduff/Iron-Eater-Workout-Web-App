@@ -64,15 +64,6 @@
 			</div>
 		</div>
 
-		<script>
-			$('document').ready(function() {
-  				$('.createExForm').on('click', function () {
-  					$('.exForm').removeClass('hidden');
-  					$('.hideWell').addClass('hidden');
-  				});
-  			});
-		</script>
-
 		<div class="well hideWell">
 			<button class="btn btn-default btn-primary btn-block createExForm">Create a New Workout</button>
 		</div>

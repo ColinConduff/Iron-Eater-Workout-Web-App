@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +9,13 @@
 
     {!! Html::style('assets/vendor/bootstrap/dist/css/bootstrap.min.css') !!}
     {{-- {!! Html::style('assets/vendor/font-awesome/css/font-awesome.min.css') !!} --}}
-    
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
+    {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
+    {!! Html::script('/assets/js/index.js') !!}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </head>
+
 <body>
 
   <nav class="navbar navbar-default">
@@ -33,7 +37,7 @@
           <li><a href="{{ url('/sessions') }}">Workout History</a></li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-right hidden-xs">
+        <ul class="nav navbar-nav navbar-right">
         @if (Auth::check())
           <li><a href="{{ url('auth/logout') }}">Logout</a></li>
         @else
@@ -47,9 +51,7 @@
 
   @yield('content')
 
-  {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
   {!! Html::script('/assets/vendor/bootstrap/dist/js/bootstrap.min.js') !!}
-  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
   {!! Html::script('/assets/js/timerFunction.js') !!}
 
 </body>
