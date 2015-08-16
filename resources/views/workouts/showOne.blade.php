@@ -12,8 +12,6 @@
 		@if(count($currentSessions))
 			<div class="well">
 			<div class="well" style="background-color:#E6E6E6"><h3 class="text-center">Current Sessions</h3></div>
-			
-			{!! Html::script('/assets/js/timerFunction.js') !!}
 
 			<div style="margin-bottom:1em" class="text-center">
 				<a class="btn btn-default thirtySec">30 Sec</a>

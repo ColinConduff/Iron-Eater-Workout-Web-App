@@ -7,13 +7,9 @@
     <title>IronEater</title>
 
     {!! Html::style('assets/vendor/bootstrap/dist/css/bootstrap.min.css') !!}
-    {!! Html::style('assets/vendor/font-awesome/css/font-awesome.min.css') !!}
-    {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
-    {!! Html::script('/assets/vendor/bootstrap/dist/js/bootstrap.min.js') !!}
-    {!! Html::script('/assets/vendor/jquery.countdown/dist/jquery.countdown.min.js') !!}
+    {{-- {!! Html::style('assets/vendor/font-awesome/css/font-awesome.min.css') !!} --}}
     
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
 </head>
 <body>
@@ -50,5 +46,11 @@
   </nav>
 
   @yield('content')
+
+  {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
+  {!! Html::script('/assets/vendor/bootstrap/dist/js/bootstrap.min.js') !!}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+  {!! Html::script('/assets/js/timerFunction.js') !!}
+
 </body>
 </html>
