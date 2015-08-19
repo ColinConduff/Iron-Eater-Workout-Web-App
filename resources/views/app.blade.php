@@ -8,10 +8,13 @@
     <title>IronEater</title>
 
     {!! Html::style('assets/vendor/bootstrap/dist/css/bootstrap.min.css') !!}
+    {!! Html::style('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') !!}
     {{-- {!! Html::style('assets/vendor/font-awesome/css/font-awesome.min.css') !!} --}}
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
-    {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js'); !!}
+    {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js') !!}
+    {!! Html::script('/assets/vendor/moment/min/moment.min.js') !!}
+    {!! Html::script('/assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') !!}
     {!! Html::script('/assets/js/index.js') !!}
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </head>
@@ -33,8 +36,12 @@
       <div class="collapse navbar-collapse" id="collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+          <li><a href="">Log</a></li>
+          <li><a href="">Plans</a></li>
+          <li><a href="">Workouts</a></li>
           <li><a href="{{ url('/exercises') }}">Exercises</a></li>
           <li><a href="{{ url('/sessions') }}">Workout History</a></li>
+          <li><a href="">Settings</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

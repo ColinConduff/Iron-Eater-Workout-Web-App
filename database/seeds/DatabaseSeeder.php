@@ -13,6 +13,11 @@ use App\SessionSet;
 use App\SessionPlan;
 use App\SessionPlanDate;
 use App\SessionSetPlan;
+use App\Plan;
+use App\PlanWorkout;
+use App\PlanExercise;
+use App\PlanDate;
+use App\PlanSet;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,7 +37,8 @@ class DatabaseSeeder extends Seeder
         $userTest = User::create([
             'name' => 'userTest',
             'email' => 'userTest@gmail.com',
-            'password' => bcrypt('userTest')
+            'password' => bcrypt('userTest'),
+            'heightInches' => 70
         ]);
 
         $workout1 = Workout::create([
@@ -148,6 +154,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet2 = SessionSet::create([
@@ -155,6 +162,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet3 = SessionSet::create([
@@ -162,6 +170,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet4 = SessionSet::create([
@@ -169,6 +178,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 95,
             'one_rep_max' => 100,
+            'failed' => false
         ]);
 
         $sessionSet5 = SessionSet::create([
@@ -176,6 +186,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 95,
             'one_rep_max' => 100,
+            'failed' => false
         ]);
 
         $sessionSet6 = SessionSet::create([
@@ -183,6 +194,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 95,
             'one_rep_max' => 100,
+            'failed' => false
         ]);
 
         $sessionSet7 = SessionSet::create([
@@ -190,6 +202,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 65,
             'one_rep_max' => 80,
+            'failed' => false
         ]);
 
         $sessionSet8 = SessionSet::create([
@@ -197,6 +210,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 65,
             'one_rep_max' => 80,
+            'failed' => false
         ]);
 
         $sessionSet9 = SessionSet::create([
@@ -204,6 +218,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 65,
             'one_rep_max' => 80,
+            'failed' => false
         ]);
 
         $sessionSet10 = SessionSet::create([
@@ -211,6 +226,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet11 = SessionSet::create([
@@ -218,6 +234,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet12 = SessionSet::create([
@@ -225,6 +242,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet13 = SessionSet::create([
@@ -232,6 +250,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet14 = SessionSet::create([
@@ -239,6 +258,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet15 = SessionSet::create([
@@ -246,6 +266,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet16 = SessionSet::create([
@@ -253,6 +274,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet17 = SessionSet::create([
@@ -260,6 +282,7 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
         ]);
 
         $sessionSet18 = SessionSet::create([
@@ -267,6 +290,75 @@ class DatabaseSeeder extends Seeder
             'number_of_reps' => 8,
             'weight_lifted' => 180,
             'one_rep_max' => 190,
+            'failed' => false
+        ]);
+
+        $plan1 = Plan::create([
+            'user_id' => $userTest->id,
+            'title' => '5/3/1',
+            'start_date' => Carbon::now(),
+            'end_date' => Carbon::now()->addWeeks(4)
+        ]);
+
+        $planWorkout1 = PlanWorkout::create([
+            'plan_id' => $plan1->id,
+            'workout_id' => $workout1->id
+        ]);
+
+        $planWorkout2 = PlanWorkout::create([
+            'plan_id' => $plan1->id,
+            'workout_id' => $workout2->id
+        ]);
+
+        $planWorkout3 = PlanWorkout::create([
+            'plan_id' => $plan1->id,
+            'workout_id' => $workout3->id
+        ]);
+
+        $planDate1 = PlanDate::create([
+            'planWorkout_id' => $planWorkout1->id,
+            'futureWorkoutDate' => Carbon::tomorrow()
+        ]);
+
+        $planDate2 = PlanDate::create([
+            'planWorkout_id' => $planWorkout1->id,
+            'futureWorkoutDate' => Carbon::tomorrow()->addDays(5)
+        ]);
+
+        $planDate3 = PlanDate::create([
+            'planWorkout_id' => $planWorkout2->id,
+            'futureWorkoutDate' => Carbon::tomorrow()->addDay()
+        ]);
+
+        $planDate4 = PlanDate::create([
+            'planWorkout_id' => $planWorkout2->id,
+            'futureWorkoutDate' => Carbon::tomorrow()->addDays(6)
+        ]);
+
+        $planExercise1 = PlanExercise::create([
+            'planWorkout_id' => $planWorkout1->id,
+            'exercise_id' => $exercise1->id,
+            'weightToAddForSuccess' => 5,
+            'weightToSubForFail' => 5
+        ]);
+
+        $planExercise2 = PlanExercise::create([
+            'planWorkout_id' => $planWorkout1->id,
+            'exercise_id' => $exercise2->id,
+            'weightToAddForSuccess' => 5,
+            'weightToSubForFail' => 5
+        ]);
+
+        $planSet1 = PlanSet::create([
+            'planExercise_id' => $planExercise1->id,
+            'expected_reps' => 10,
+            'expected_weight' => 100
+        ]);
+
+        $planSet2 = PlanSet::create([
+            'planExercise_id' => $planExercise1->id,
+            'expected_reps' => 10,
+            'expected_weight' => 100
         ]);
     }
 }

@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class ExerciseController extends Controller
 {
     /**
-     * Instantiate a new UserController instance.
+     * Instantiate a new ExerciseController instance.
      */
     public function __construct()
     {

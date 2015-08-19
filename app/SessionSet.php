@@ -13,6 +13,7 @@ class SessionSet extends Model
         'number_of_reps',
         'weight_lifted',
         'one_rep_max',
+        'failed'
     ];
 
     public function session()

@@ -47,10 +47,7 @@
 
 
 		<div class="text-center well">
-			{!! Form::open(array('url' => 'exercises/' . $exercise->id)) !!}
-                {!! Form::hidden('_method', 'DELETE') !!}
-                {!! Form::button('Delete', array('type' => 'submit', 'class' => 'btn btn-block btn-danger')) !!}
-            {!! Form::close() !!}
+			
         </div>
 	</div>
 @stop

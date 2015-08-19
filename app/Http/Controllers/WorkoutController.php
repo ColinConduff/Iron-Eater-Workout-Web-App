@@ -17,7 +17,7 @@ use App\Http\Controllers\Controller;
 class WorkoutController extends Controller
 {
     /**
-     * Instantiate a new UserController instance.
+     * Instantiate a new WorkoutController instance.
      */
     public function __construct()
     {
@@ -53,7 +53,7 @@ class WorkoutController extends Controller
      */
     public function store(Requests\WorkoutRequest $request)
     {
-       $workout = new Workout($request->all());
+        $workout = new Workout($request->all());
 
         Auth::user()->workouts()->save($workout);
 

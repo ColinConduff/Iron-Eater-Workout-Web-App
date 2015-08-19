@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 class SessionController extends Controller
 {
     /**
-     * Instantiate a new UserController instance.
+     * Instantiate a new SessionController instance.
      */
     public function __construct()
     {
@@ -210,6 +210,6 @@ class SessionController extends Controller
         $workoutID = $session->workout_id;
         $session->delete();
 
-        return redirect()->action('WorkoutController@show', ['id' => $workoutID]);
+        return back();
     }
 }

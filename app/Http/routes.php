@@ -67,6 +67,18 @@ Route::get('filterByWorkoutTitle/{id}', [
 	'uses' => 'SessionController@filterByWorkoutTitle'
 ]);
 
+Route::get('plans', 'PlanController@index');
+Route::get('plans/createStep1', 'PlanController@createStep1');
+Route::get('plans/createStep2/{plan_id}', 'PlanController@createStep2');
+Route::get('plans/createStep3/{plan_id}', 'PlanController@createStep3');
+Route::post('plans', 'PlanController@store');
+Route::get('plans/{id}', 'PlanController@show');
+Route::get('plans/{id}/edit', 'PlanController@edit');
+Route::post('planWorkouts', 'PlanWorkoutController@store');
+Route::post('planDates', 'PlanDateController@store');
+Route::post('planExercises', 'PlanExerciseController@store');
+Route::post('planSets', 'PlanSetController@store');
+
 Route::resource('exercises', 'ExerciseController', 
 	['except' => ['create']]);
 Route::resource('workouts', 'WorkoutController', 

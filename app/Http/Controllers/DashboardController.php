@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     /**
-     * Instantiate a new UserController instance.
+     * Instantiate a new DashboardController instance.
      */
     public function __construct()
     {

@@ -18,6 +18,7 @@
     "bootstrap-select": "~1.6.4",
     "font-awesome": "~4.3.0",
     "jquery": "~2.1.4",
-    "jquery.countdown": "~2.0.4"
+    "jquery.countdown": "~2.0.4",
+    "eonasdan-bootstrap-datetimepicker": "~4.15.35"
   }
 }

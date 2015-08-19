@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="well hideWell">
-			<button class="btn btn-default btn-primary btn-block createExForm">Create a New Workout</button>
+			<button class="btn btn-default btn-primary btn-block createExForm">Create a New Exercise</button>
 		</div>
 
 		<div class="well hidden exForm">

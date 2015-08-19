@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 class SessionSetController extends Controller
 {
     /**
-     * Instantiate a new UserController instance.
+     * Instantiate a new SessionSetController instance.
      */
     public function __construct()
     {
