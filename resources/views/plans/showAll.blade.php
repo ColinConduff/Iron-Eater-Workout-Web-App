@@ -9,6 +9,10 @@
 			@if(count($plans))
 				@foreach($plans as $plan)
 					<a href="" class="btn btn-default btn-block">{{ $plan->title }}</a>
+					{!! Form::open(array('url' => 'plans/' . $plan->id)) !!}
+	                    {!! Form::hidden('_method', 'DELETE') !!}
+	                    {!! Form::button('Delete Plan', array('type' => 'submit', 'class' => 'btn btn-danger', 'style' => 'width:100%')) !!}
+	                {!! Form::close() !!}
 				@endforeach
 			@endif
 		</div>

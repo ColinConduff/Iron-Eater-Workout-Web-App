@@ -9,28 +9,33 @@
 
 		@if($plan->planWorkouts->count())
 			@foreach($plan->planWorkouts as $planWorkout)
-				<h3>{{ $planWorkout->workout_id->title }}</h3>
-				<h4>Form for selecting planDates</h4>
+				<h3>{{ $planWorkout->workout->title }}</h3>
 			@endforeach
 		@endif
 
-		{{--
+		@include('errors.list')
+
 		<div class="well">
 			{!! Form::open(['url' => 'planWorkouts']) !!}
 			    <div hidden=true class="form-group">
-					{!! Form::text('workout_id', $workout->id, ['class' => 'form-control']) !!}
+					{!! Form::text('plan_id', $plan->id, ['class' => 'form-control']) !!}
 				</div>
 
 			    <div class="form-group">
-				    {!! Form::select('id[]', $exercises, null, ['id' => 'exercise_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
+				    {!! Form::select('id[]', $workouts, null, ['id' => 'workout_list', 'class' => 'form-control', 'multiple', 'style' => 'width:100%']) !!}
 				</div>
 
 				<div class="form-group">
-					{!! Form::submit('Add Session', ['class' => 'btn btn-primary form-control']) !!}
+					{!! Form::submit('Add Workouts', ['class' => 'btn btn-primary form-control']) !!}
 				</div>
 			{!! Form::close() !!}
 		</div>
-		--}}
+
+		<script>
+			$('#workout_list').select2({
+				placeholder: 'Choose Workouts'
+			});
+		</script>
 
 		<div class="well">
 			<a href="{{ url('plans/createStep3', [$plan->id]) }}" class="btn btn-primary btn-block">

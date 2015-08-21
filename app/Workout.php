@@ -21,4 +21,9 @@ class Workout extends Model
     {
         return $this->hasMany('App\Session');
     }
+
+    public function planWorkouts()
+    {
+        return $this->hasMany('App\PlanWorkout');
+    }
 }

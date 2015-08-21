@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PlanStep3Request extends Request
+class PlanWorkoutRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class PlanStep3Request extends Request
     public function rules()
     {
         return [
-            'exercise_id'  => 'required',
-            'weightToAddForSuccess'  => 'required',
-            'weightToSubForFail'  => 'required',
-            'expected_reps'  => 'required',
-            'expected_weight'  => 'required'
+            'plan_id' => 'required'
         ];
     }
 }

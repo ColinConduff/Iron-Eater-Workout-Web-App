@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\PlanWorkout;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -37,12 +38,17 @@ class PlanWorkoutController extends Controller
      */
     public function store(Requests\PlanWorkoutRequest $request)
     {
-        $planWorkout = new PlanWorkout($request->all());
-        $planWorkout->save();
+        $workoutIDs = $request->input('id');
 
-        $plan = Plan::with('planWorkouts.planDates')->findOrFail($planWorkout->plan_id);
+        foreach($workoutIDs as $workoutID)
+        {
+            $planWorkout = new PlanWorkout;
+            $planWorkout->workout_id = $workoutID;
+            $planWorkout->plan_id = $request->plan_id;
+            $planWorkout->save();
+        }
 
-        return redirect('plans.createStep2', compact($plan));
+        return redirect()->action('PlanController@createStep2', [$request->plan_id]);
     }
 
     /**

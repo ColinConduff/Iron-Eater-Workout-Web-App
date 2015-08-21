@@ -65,9 +65,13 @@ class PlanController extends Controller
      */
     public function createStep2($plan_id)
     {
-        $plan = Plan::with('planWorkouts.planDates')->findOrFail($plan_id);
+        $plan = Plan::with('planWorkouts', 'planWorkouts.workout')->findOrFail($plan_id);
 
-        return view('plans.createStep2', compact('plan'));
+        $workouts = Auth::user()->workouts()
+            ->select('workouts.id', 'workouts.title')
+            ->lists('title', 'id');
+
+        return view('plans.createStep2', compact('plan', 'workouts'));
     }
 
     /**
@@ -115,6 +119,9 @@ class PlanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $plan = Plan::findOrFail($id);
+        $plan->delete();
+
+        return redirect()->action('PlanController@index');
     }
 }
