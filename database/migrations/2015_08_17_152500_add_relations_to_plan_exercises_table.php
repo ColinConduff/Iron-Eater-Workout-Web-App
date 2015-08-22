@@ -12,10 +12,10 @@ class AddRelationsToPlanExercisesTable extends Migration
      */
     public function up()
     {
-        Schema::table('planExercises', function (Blueprint $table) {
-            $table->foreign('planWorkout_id')
+        Schema::table('plan_exercises', function (Blueprint $table) {
+            $table->foreign('plan_workout_id')
                   ->references('id')
-                  ->on('planWorkouts')
+                  ->on('plan_workouts')
                   ->onDelete('cascade');
 
             $table->foreign('exercise_id')
@@ -32,8 +32,8 @@ class AddRelationsToPlanExercisesTable extends Migration
      */
     public function down()
     {
-        Schema::table('planExercises', function (Blueprint $table) {
-            $table->dropForeign(['planWorkout_id']);
+        Schema::table('plan_exercises', function (Blueprint $table) {
+            $table->dropForeign(['plan_workout_id']);
             $table->dropForeign(['exercise_id']);
         });
     }

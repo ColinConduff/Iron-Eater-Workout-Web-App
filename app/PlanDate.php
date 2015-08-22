@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlanDate extends Model
 {
-	protected $table = 'planDates';
-
     protected $fillable = [
-    	'planWorkout_id',
-        'futureWorkoutDate'
+    	'plan_workout_id',
+        'planned_date'
     ];
     
     public function planWorkout()

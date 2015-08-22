@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
+use App\PlanDate;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,14 +37,15 @@ class PlanDateController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Requests\PlanDateRequest $request)
+    public function store(Request $request)
     {
-        //store array of planDates
+        $planEndDate = DB::table('plans')->where('id', '=', $request->input('plan_id'))->value('end_date');
+        $this->validate($request, ['planned_date' => 'required|date|after:yesterday|before:'.$planEndDate]);
+        
+        $planDate = new PlanDate($request->all());
+        $planDate->save();
 
-        //use hidden form to pass $plan_id 
-        $plan = Plan::with('planWorkouts.planDates')->findOrFail($plan_id);
-
-        return redirect('plans.createStep2', compact());
+        return redirect()->action('PlanController@createStep3', [$request->plan_id]);
     }
 
     /**

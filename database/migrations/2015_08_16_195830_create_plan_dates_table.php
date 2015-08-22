@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlanSetsTable extends Migration
+class CreatePlanDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreatePlanSetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('planSets', function (Blueprint $table) {
+        Schema::create('plan_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('planExercise_id')->unsigned();
-            $table->integer('expected_reps')->unsigned();
-            $table->integer('expected_weight')->unsigned();
+            $table->integer('plan_workout_id')->unsigned();
+            $table->date('planned_date');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreatePlanSetsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('planSets');
+        Schema::drop('plan_dates');
     }
 }

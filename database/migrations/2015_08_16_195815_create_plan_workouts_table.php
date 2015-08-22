@@ -12,7 +12,7 @@ class CreatePlanWorkoutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('planWorkouts', function (Blueprint $table) {
+        Schema::create('plan_workouts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('plan_id')->unsigned();
             $table->integer('workout_id')->unsigned();
@@ -27,6 +27,6 @@ class CreatePlanWorkoutsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('planWorkouts');
+        Schema::drop('plan_workouts');
     }
 }

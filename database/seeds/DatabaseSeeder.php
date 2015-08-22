@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'userTest',
             'email' => 'userTest@gmail.com',
             'password' => bcrypt('userTest'),
-            'heightInches' => 70
+            'height_inches' => 70
         ]);
 
         $workout1 = Workout::create([
@@ -316,47 +316,47 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $planDate1 = PlanDate::create([
-            'planWorkout_id' => $planWorkout1->id,
-            'futureWorkoutDate' => Carbon::tomorrow()
+            'plan_workout_id' => $planWorkout1->id,
+            'planned_date' => Carbon::tomorrow()
         ]);
 
         $planDate2 = PlanDate::create([
-            'planWorkout_id' => $planWorkout1->id,
-            'futureWorkoutDate' => Carbon::tomorrow()->addDays(5)
+            'plan_workout_id' => $planWorkout1->id,
+            'planned_date' => Carbon::tomorrow()->addDays(5)
         ]);
 
         $planDate3 = PlanDate::create([
-            'planWorkout_id' => $planWorkout2->id,
-            'futureWorkoutDate' => Carbon::tomorrow()->addDay()
+            'plan_workout_id' => $planWorkout2->id,
+            'planned_date' => Carbon::tomorrow()->addDay()
         ]);
 
         $planDate4 = PlanDate::create([
-            'planWorkout_id' => $planWorkout2->id,
-            'futureWorkoutDate' => Carbon::tomorrow()->addDays(6)
+            'plan_workout_id' => $planWorkout2->id,
+            'planned_date' => Carbon::tomorrow()->addDays(6)
         ]);
 
         $planExercise1 = PlanExercise::create([
-            'planWorkout_id' => $planWorkout1->id,
+            'plan_workout_id' => $planWorkout1->id,
             'exercise_id' => $exercise1->id,
-            'weightToAddForSuccess' => 5,
-            'weightToSubForFail' => 5
+            'weight_to_add_for_success' => 5,
+            'weight_to_sub_for_fail' => 5
         ]);
 
         $planExercise2 = PlanExercise::create([
-            'planWorkout_id' => $planWorkout1->id,
+            'plan_workout_id' => $planWorkout1->id,
             'exercise_id' => $exercise2->id,
-            'weightToAddForSuccess' => 5,
-            'weightToSubForFail' => 5
+            'weight_to_add_for_success' => 5,
+            'weight_to_sub_for_fail' => 5
         ]);
 
         $planSet1 = PlanSet::create([
-            'planExercise_id' => $planExercise1->id,
+            'plan_exercise_id' => $planExercise1->id,
             'expected_reps' => 10,
             'expected_weight' => 100
         ]);
 
         $planSet2 = PlanSet::create([
-            'planExercise_id' => $planExercise1->id,
+            'plan_exercise_id' => $planExercise1->id,
             'expected_reps' => 10,
             'expected_weight' => 100
         ]);

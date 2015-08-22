@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlanSet extends Model
 {
-	protected $table = 'planSets';
-
     protected $fillable = [
-    	'planExercise_id',
+    	'plan_exercise_id',
         'expected_reps',
         'expected_weight'
     ];

@@ -12,12 +12,12 @@ class CreatePlanExercisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('planExercises', function (Blueprint $table) {
+        Schema::create('plan_exercises', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('planWorkout_id')->unsigned();
+            $table->integer('plan_workout_id')->unsigned();
             $table->integer('exercise_id')->unsigned();
-            $table->integer('weightToAddForSuccess')->unsigned();
-            $table->integer('weightToSubForFail')->unsigned();
+            $table->integer('weight_to_add_for_success')->unsigned();
+            $table->integer('weight_to_sub_for_fail')->unsigned();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreatePlanExercisesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('planExercises');
+        Schema::drop('plan_exercises');
     }
 }

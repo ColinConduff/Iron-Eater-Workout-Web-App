@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App\Plan;
+use App\PlanWorkout;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -65,13 +66,17 @@ class PlanController extends Controller
      */
     public function createStep2($plan_id)
     {
-        $plan = Plan::with('planWorkouts', 'planWorkouts.workout')->findOrFail($plan_id);
+        $plan = Plan::with('planWorkouts')->findOrFail($plan_id);
 
         $workouts = Auth::user()->workouts()
             ->select('workouts.id', 'workouts.title')
             ->lists('title', 'id');
 
-        return view('plans.createStep2', compact('plan', 'workouts'));
+        $exercises = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        return view('plans.createStep2', compact('plan', 'workouts', 'exercises'));
     }
 
     /**
@@ -81,7 +86,7 @@ class PlanController extends Controller
      */
     public function createStep3($plan_id)
     {
-        $plan = Plan::with('planWorkouts.planExercises.planSets')->findOrFail($plan_id);
+        $plan = Plan::with('planWorkouts')->findOrFail($plan_id);
 
         return view('plans.createStep3', compact('plan'));
     }

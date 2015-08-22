@@ -73,12 +73,14 @@ Route::get('plans/createStep3/{plan_id}', 'PlanController@createStep3');
 
 Route::resource('plans', 'PlanController', 
 	['except' => ['create']]);
-
-Route::post('planWorkouts', 'PlanWorkoutController@store');
-
-Route::post('planDates', 'PlanDateController@store');
-Route::post('planExercises', 'PlanExerciseController@store');
-Route::post('planSets', 'PlanSetController@store');
+Route::resource('planWorkouts', 'PlanWorkoutController', 
+	['except' => ['create']]);
+Route::resource('planDates', 'PlanDateController', 
+	['except' => ['create']]);
+Route::resource('planExercises', 'PlanExerciseController', 
+	['except' => ['create']]);
+Route::resource('planSets', 'PlanSetController', 
+	['except' => ['create']]);
 
 Route::resource('exercises', 'ExerciseController', 
 	['except' => ['create']]);

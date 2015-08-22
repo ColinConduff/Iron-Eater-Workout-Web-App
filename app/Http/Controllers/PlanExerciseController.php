@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use App\PlanExercise;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,15 +37,19 @@ class PlanExerciseController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Requests\PlanExerciseRequest $request)
+    public function store(Request $request)
     {
-        $planExercise = new PlanExercise($request->all());
-        $planExercise->save();
+        $exerciseIDs = $request->input('id');
 
-        // send plan_id as part of the request
-        $plan = Plan::with('planWorkouts.planExercises.planSets')->findOrFail($plan_id);
+        foreach($exerciseIDs as $exerciseID)
+        {
+            $planExercise = new PlanExercise;
+            $planExercise->exercise_id = $exerciseID;
+            $planExercise->plan_workout_id = $request->plan_workout_id;
+            $planExercise->save();
+        }
 
-        return redirect('plans.createStep3', compact('plan'));
+        return redirect()->action('PlanController@createStep2', [$request->plan_id]);
     }
 
     /**
@@ -77,7 +83,11 @@ class PlanExerciseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $planExercise = PlanExercise::findOrFail($id);
+
+        $planExercise->update($request->all());
+
+        return redirect()->action('PlanController@createStep2', [$request->plan_id]);
     }
 
     /**

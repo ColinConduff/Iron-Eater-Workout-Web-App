@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SessionSet extends Model
 {
-	protected $table = 'sessionSets';
-
     protected $fillable = [
     	'session_id',
         'number_of_reps',

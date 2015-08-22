@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlanExercise extends Model
 {
-    protected $table = 'planExercises';
-
     protected $fillable = [
-        'planWorkout_id',
+        'plan_workout_id',
         'exercise_id',
-        'weightToAddForSuccess',
-        'weightToSubForFail'
+        'weight_to_add_for_success',
+        'weight_to_sub_for_fail'
     ];
     
     public function exercise()

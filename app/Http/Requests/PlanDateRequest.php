@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use DB;
 use App\Http\Requests\Request;
 
-class PlanRequest extends Request
+class PlanDateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,9 @@ class PlanRequest extends Request
      * @return array
      */
     public function rules()
-    {
+    {   
         return [
-            'title'  => 'required',
-            'start_date'  => 'required|date|after:yesterday',
-            'end_date'  => 'required|date'
+            'planned_date' => 'required|date|after:yesterday|before:'.$planEndDate
         ];
     }
 }

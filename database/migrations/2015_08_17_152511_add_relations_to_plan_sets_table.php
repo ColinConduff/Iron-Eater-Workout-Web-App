@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRelationsToSessionSetsTable extends Migration
+class AddRelationsToPlanSetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class AddRelationsToSessionSetsTable extends Migration
      */
     public function up()
     {
-        Schema::table('sessionSets', function (Blueprint $table) {
-            $table->foreign('session_id')
+        Schema::table('plan_sets', function (Blueprint $table) {
+            $table->foreign('plan_exercise_id')
                   ->references('id')
-                  ->on('sessions')
+                  ->on('plan_exercises')
                   ->onDelete('cascade');
         });
     }
@@ -27,8 +27,9 @@ class AddRelationsToSessionSetsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessionSets', function (Blueprint $table) {
-            $table->dropForeign(['session_id']);
+        Schema::table('plan_sets', function (Blueprint $table) {
+            $table->dropForeign(['plan_exercise_id']);
         });
     }
 }
+

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlanDatesTable extends Migration
+class CreateSessionSetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,13 @@ class CreatePlanDatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('planDates', function (Blueprint $table) {
+        Schema::create('session_sets', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('planWorkout_id')->unsigned();
-            $table->date('futureWorkoutDate');
+            $table->integer('session_id')->unsigned();
+            $table->integer('number_of_reps');
+            $table->integer('weight_lifted');
+            $table->integer('one_rep_max');
+            $table->boolean('failed');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreatePlanDatesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('planDates');
+        Schema::drop('session_sets');
     }
 }
