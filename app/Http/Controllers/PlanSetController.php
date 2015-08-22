@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\PlanSet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,15 +36,12 @@ class PlanSetController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Requests\PlanSetRequest $request)
+    public function store(Request $request)
     {
         $planSet = new PlanSet($request->all());
         $planSet->save();
 
-        // send plan_id as part of the request
-        $plan = Plan::with('planWorkouts.planExercises.planSets')->findOrFail($plan_id);
-
-        return redirect('plans.createStep3', compact('plan'));
+        return redirect()->action('PlanController@createStep2', [$request->plan_id]);
     }
 
     /**
