@@ -99,7 +99,7 @@ class PlanController extends Controller
      */
     public function show($id)
     {
-        $plan = Plan::findOrFail($id);
+        $plan = Plan::with('planWorkouts')->findOrFail($id);
 
         return view('plans.showOne', compact('plan'));
     }

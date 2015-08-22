@@ -18,13 +18,13 @@
 			<h3>Customize</h3>
 			<div class="row">
 				<div class="col-xs-4">
-					<a href="" class="btn btn-default btn-block">Plans</a>
+					<a href="{{ url('/plans') }}" class="btn btn-default btn-block">Plans</a>
 				</div>
 				<div class="col-xs-4">
-					<a href="" class="btn btn-default btn-block">Workouts</a>
+					<a href="{{ url('/workouts') }}" class="btn btn-default btn-block">Workouts</a>
 				</div>
 				<div class="col-xs-4">
-					<a href="" class="btn btn-default btn-block">Exercises</a>
+					<a href="{{ url('/exercises') }}" class="btn btn-default btn-block">Exercises</a>
 				</div>
 			</div>
 		</div>

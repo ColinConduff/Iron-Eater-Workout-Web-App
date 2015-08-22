@@ -8,11 +8,17 @@
 		<div class="well text-center">
 			@if(count($plans))
 				@foreach($plans as $plan)
-					<a href="" class="btn btn-default btn-block">{{ $plan->title }}</a>
-					{!! Form::open(array('url' => 'plans/' . $plan->id)) !!}
-	                    {!! Form::hidden('_method', 'DELETE') !!}
-	                    {!! Form::button('Delete Plan', array('type' => 'submit', 'class' => 'btn btn-danger', 'style' => 'width:100%')) !!}
-	                {!! Form::close() !!}
+					<div class="row">
+						<div class="col-sm-10">
+							<a href="" class="btn btn-default btn-block">{{ $plan->title }}</a>
+						</div>
+						<div class="col-sm-2">
+							{!! Form::open(array('url' => 'plans/' . $plan->id)) !!}
+			                    {!! Form::hidden('_method', 'DELETE') !!}
+			                    {!! Form::button('Delete', array('type' => 'submit', 'class' => 'btn btn-danger', 'style' => 'width:100%')) !!}
+			                {!! Form::close() !!}
+			            </div>
+	                </div>
 				@endforeach
 			@endif
 		</div>

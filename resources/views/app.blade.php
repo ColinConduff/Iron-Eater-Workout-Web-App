@@ -37,8 +37,8 @@
         <ul class="nav navbar-nav">
           <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
           <li><a href="">Log</a></li>
-          <li><a href="">Plans</a></li>
-          <li><a href="">Workouts</a></li>
+          <li><a href="{{ url('/plans') }}">Plans</a></li>
+          <li><a href="{{ url('/workouts') }}">Workouts</a></li>
           <li><a href="{{ url('/exercises') }}">Exercises</a></li>
           <li><a href="{{ url('/sessions') }}">Workout History</a></li>
           <li><a href="">Settings</a></li>
