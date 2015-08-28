@@ -105,15 +105,32 @@ class PlanController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $plan = Plan::with('planWorkouts')->findOrFail($id);
+
+        return view('plans.edit', compact('plan'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PlanRequest $request, $id)
     {
-        //
+        $plan = Auth::user()->plans()->findOrFail($id);
+
+        $plan->update($request->all());
+
+        return redirect()->action('PlanController@show', [$plan->id]);
     }
 
     /**

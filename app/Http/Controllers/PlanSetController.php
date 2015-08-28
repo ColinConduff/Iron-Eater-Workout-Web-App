@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\PlanExercise;
 use App\PlanSet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -63,7 +64,10 @@ class PlanSetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $planSet = PlanSet::findOrFail($id);
+        $planExercise = PlanExercise::with('planSets', 'planWorkout')->findOrFail($planSet->plan_exercise_id);
+
+        return view('plans.editPlanSets', compact('planExercise'));
     }
 
     /**
@@ -75,7 +79,11 @@ class PlanSetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $planSet = PlanSet::findOrFail($id);
+
+        $planSet->update($request->all());
+
+        return back()->with('status', 'Successful update!');;
     }
 
     /**
@@ -86,6 +94,10 @@ class PlanSetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $planSet = PlanSet::findOrFail($id);
+        $plan_id = $planSet->planExercise->planWorkout->plan_id;
+        $planSet->delete();
+
+        return redirect()->action('PlanController@show', [$plan_id]);
     }
 }

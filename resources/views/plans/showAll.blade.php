@@ -10,7 +10,7 @@
 				@foreach($plans as $plan)
 					<div class="row">
 						<div class="col-sm-10">
-							<a href="" class="btn btn-default btn-block">{{ $plan->title }}</a>
+							<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-default btn-block">{{ $plan->title }}</a>
 						</div>
 						<div class="col-sm-2">
 							{!! Form::open(array('url' => 'plans/' . $plan->id)) !!}

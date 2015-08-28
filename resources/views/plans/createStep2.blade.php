@@ -20,53 +20,41 @@
 
 					@foreach($planWorkout->planExercises as $planExercise)
 						<div class="row">
-							<div class="col-sm-4">
+							<div class="col-xs-4">
 								<h4 class="text-center">{{ $planExercise->exercise->title }}</h4>
 							</div>
 
-							<div class="col-sm-4 text-center">
-								@if($planExercise->weight_to_add_for_success)
-									<h5>Add {{ $planExercise->weight_to_add_for_success }} lbs for successful lift</h5>
+								@if($planExercise->weight_to_add_for_success and $planExercise->weight_to_sub_for_fail)
+									<div class="col-xs-4 text-center">
+										<h5>Add {{ $planExercise->weight_to_add_for_success }} lbs for successful lift</h5>
+									</div>
+									<div class="col-xs-4 text-center">
+										<h5>Subtract {{ $planExercise->weight_to_add_for_success }} lbs for failed lift</h5>
+									</div>
 								@else
+									<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+
 									{!! Form::model($planExercise, ['method' => 'PATCH', 'action' => ['PlanExerciseController@update', $planExercise->id]]) !!}
 
 										<div hidden=true class="form-group">
 											{!! Form::text('plan_id', $plan->id, ['class' => 'form-control']) !!}
 										</div>
 
-									    <div class="form-group">
+									    <div class="col-sm-5 form-group">
 										    {!! Form::number('weight_to_add_for_success', '', ['class' => 'form-control','placeholder' => 'Weight to add after successful lift', 'style' => 'width:100%']) !!}
 										</div>
 
-										<div class="form-group">
-											{!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
-										</div>
-
-									{!! Form::close() !!}
-								@endif
-							</div>
-
-							<div class="col-sm-4 text-center">
-								@if($planExercise->weight_to_sub_for_fail)
-									<h5>Subtract {{ $planExercise->weight_to_sub_for_fail }} lbs for failed lift</h5>
-								@else
-									{!! Form::model($planExercise, ['method' => 'PATCH', 'action' => ['PlanExerciseController@update', $planExercise->id]]) !!}
-
-										<div hidden=true class="form-group">
-											{!! Form::text('plan_id', $plan->id, ['class' => 'form-control']) !!}
-										</div>
-										
-									    <div class="form-group">
+										<div class="col-sm-5 form-group">
 										    {!! Form::number('weight_to_sub_for_fail', '', ['class' => 'form-control', 'placeholder' => 'Weight to subtract after failed lift', 'style' => 'width:100%']) !!}
 										</div>
 
-										<div class="form-group">
+										<div class="col-sm-2 form-group">
 											{!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
 										</div>
 
 									{!! Form::close() !!}
 								@endif
-							</div>
+
 						</div>
 
 						@if($planExercise->planSets->count())

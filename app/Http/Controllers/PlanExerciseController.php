@@ -71,7 +71,13 @@ class PlanExerciseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $planExercise = PlanExercise::findOrFail($id); 
+
+        $exercises = Auth::user()->exercises()
+            ->select('exercises.id', 'exercises.title')
+            ->lists('title', 'id');
+
+        return view('plans.editPlanExercise', compact('planExercise', 'exercises'));
     }
 
     /**
@@ -85,9 +91,11 @@ class PlanExerciseController extends Controller
     {
         $planExercise = PlanExercise::findOrFail($id);
 
+        $exerciseID = $request->input('id');
+        $planExercise->exercise_id = $exerciseID[0];
         $planExercise->update($request->all());
 
-        return redirect()->action('PlanController@createStep2', [$request->plan_id]);
+        return back();
     }
 
     /**
@@ -98,6 +106,9 @@ class PlanExerciseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $planExercise = PlanExercise::findOrFail($id);
+        $planExercise->delete();
+
+        return redirect()->action('PlanController@index');
     }
 }

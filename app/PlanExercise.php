@@ -18,6 +18,11 @@ class PlanExercise extends Model
 		return $this->belongsTo('App\Exercise');
 	}
 
+    public function planWorkout()
+    {
+        return $this->belongsTo('App\PlanWorkout');
+    }
+
     public function planSets()
     {
         return $this->hasMany('App\PlanSet');

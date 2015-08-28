@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\PlanWorkout;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -70,7 +71,13 @@ class PlanWorkoutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $planWorkout = PlanWorkout::findOrFail($id);
+
+        $workouts = Auth::user()->workouts()
+            ->select('workouts.id', 'workouts.title')
+            ->lists('title', 'id');
+
+        return view('plans.editPlanWorkout', compact('planWorkout', 'workouts'));
     }
 
     /**
@@ -80,9 +87,15 @@ class PlanWorkoutController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PlanWorkoutRequest $request, $id)
     {
-        //
+        $planWorkout = PlanWorkout::findOrFail($id);
+
+        $workoutID = $request->input('id');
+        $planWorkout->workout_id = $workoutID[0];
+        $planWorkout->update($request->all());
+
+        return redirect()->action('PlanController@show', [$planWorkout->plan_id]);
     }
 
     /**
@@ -93,6 +106,10 @@ class PlanWorkoutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $planWorkout = PlanWorkout::findOrFail($id);
+        $plan_id = $planWorkout->plan_id;
+        $planWorkout->delete();
+
+        return redirect()->action('PlanController@show', [$plan_id]);
     }
 }
