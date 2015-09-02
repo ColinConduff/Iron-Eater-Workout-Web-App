@@ -10,8 +10,11 @@
 
 		<div class="well">
 			{!! Form::model($planExercise, ['method' => 'PATCH', 'action' => ['PlanExerciseController@update', $planExercise->id]]) !!}
+				<div hidden=true class="form-group">
+					{!! Form::text('plan_id', $planExercise->planWorkout->plan_id, ['class' => 'form-control']) !!}
+				</div>
 
-				 <div class="form-group">
+				<div class="form-group">
 				    {!! Form::select('id[]', $exercises, $planExercise->exercise->title, ['class' => 'form-control', 'style' => 'width:100%']) !!}
 				</div>
 

@@ -29,7 +29,30 @@ class PlanController extends Controller
     {
         $plans = Auth::user()->plans()->get();
 
-        return view('plans.showAll', compact('plans'));
+        $events = [];
+
+        foreach($plans as $plan)
+        {
+            foreach($plan->planWorkouts as $planWorkout)
+            {
+                foreach($planWorkout->planDates as $planDate)
+                {
+                    $events[] = \Calendar::event(
+                        $planDate->planWorkout->workout->title, //event title
+                        true, //full day event?
+                        $planDate->planned_date, //start time (you can also use Carbon instead of DateTime)
+                        $planDate->planned_date //end time (you can also use Carbon instead of DateTime)
+                    );
+                }
+            }
+        }
+
+        $calendar = \Calendar::addEvents($events) //add an array with addEvents
+            ->setOptions([ //set fullcalendar options
+                'firstDay' => 1
+            ]); 
+
+        return view('plans.showAll', compact('plans', 'calendar'));
     }
 
     /**
@@ -86,9 +109,29 @@ class PlanController extends Controller
      */
     public function createStep3($plan_id)
     {
-        $plan = Plan::with('planWorkouts')->findOrFail($plan_id);
+        $plan = Plan::with('planWorkouts.planDates')->findOrFail($plan_id);
 
-        return view('plans.createStep3', compact('plan'));
+        $events = [];
+
+        foreach($plan->planWorkouts as $planWorkout)
+        {
+            foreach($planWorkout->planDates as $planDate)
+            {
+                $events[] = \Calendar::event(
+                    $planDate->planWorkout->workout->title, //event title
+                    true, //full day event?
+                    $planDate->planned_date, //start time (you can also use Carbon instead of DateTime)
+                    $planDate->planned_date //end time (you can also use Carbon instead of DateTime)
+                );
+            }
+        }
+
+        $calendar = \Calendar::addEvents($events) //add an array with addEvents
+            ->setOptions([ //set fullcalendar options
+                'firstDay' => 1
+            ]); 
+
+        return view('plans.createStep3', compact('plan', 'calendar'));
     }
 
     /**
@@ -101,7 +144,27 @@ class PlanController extends Controller
     {
         $plan = Plan::with('planWorkouts')->findOrFail($id);
 
-        return view('plans.showOne', compact('plan'));
+        $events = [];
+
+        foreach($plan->planWorkouts as $planWorkout)
+        {
+            foreach($planWorkout->planDates as $planDate)
+            {
+                $events[] = \Calendar::event(
+                    $planDate->planWorkout->workout->title, //event title
+                    true, //full day event?
+                    $planDate->planned_date, //start time (you can also use Carbon instead of DateTime)
+                    $planDate->planned_date //end time (you can also use Carbon instead of DateTime)
+                );
+            }
+        }
+
+        $calendar = \Calendar::addEvents($events) //add an array with addEvents
+            ->setOptions([ //set fullcalendar options
+                'firstDay' => 1
+            ]); 
+
+        return view('plans.showOne', compact('plan', 'calendar'));
     }
 
     /**

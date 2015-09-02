@@ -14,8 +14,11 @@
 
     {!! Html::script('/assets/vendor/jquery/dist/jquery.min.js') !!}
     {!! Html::script('/assets/vendor/moment/min/moment.min.js') !!}
-    {!! Html::script('/assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') !!}
+    {{-- {!! Html::script('/assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') !!} --}}
     {!! Html::script('/assets/js/index.js') !!}
+    {!! Html::style('/assets/vendor/fullcalendar/dist/fullcalendar.min.css') !!}
+    {!! Html::script('/assets/vendor/fullcalendar/dist/fullcalendar.min.js') !!}
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </head>
 

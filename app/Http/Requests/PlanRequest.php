@@ -26,7 +26,7 @@ class PlanRequest extends Request
         return [
             'title'  => 'required',
             'start_date'  => 'required|date|after:yesterday',
-            'end_date'  => 'required|date'
+            'end_date'  => 'required|date|after:yesterday'
         ];
     }
 }

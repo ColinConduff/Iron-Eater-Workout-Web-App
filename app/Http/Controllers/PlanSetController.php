@@ -37,7 +37,7 @@ class PlanSetController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Requests\PlanSetRequest $request)
     {
         $planSet = new PlanSet($request->all());
         $planSet->save();
@@ -77,7 +77,7 @@ class PlanSetController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PlanSetRequest $request, $id)
     {
         $planSet = PlanSet::findOrFail($id);
 

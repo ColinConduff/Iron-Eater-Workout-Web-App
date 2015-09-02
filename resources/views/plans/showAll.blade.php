@@ -8,17 +8,7 @@
 		<div class="well text-center">
 			@if(count($plans))
 				@foreach($plans as $plan)
-					<div class="row">
-						<div class="col-sm-10">
-							<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-default btn-block">{{ $plan->title }}</a>
-						</div>
-						<div class="col-sm-2">
-							{!! Form::open(array('url' => 'plans/' . $plan->id)) !!}
-			                    {!! Form::hidden('_method', 'DELETE') !!}
-			                    {!! Form::button('Delete', array('type' => 'submit', 'class' => 'btn btn-danger', 'style' => 'width:100%')) !!}
-			                {!! Form::close() !!}
-			            </div>
-	                </div>
+					<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-default btn-block">{{ $plan->title }}</a>
 				@endforeach
 			@endif
 		</div>
@@ -28,7 +18,8 @@
 		</div>
 
 		<div class="well">
-			<h3>Calendar</h3>
+			{!! $calendar->calendar() !!}
+    		{!! $calendar->script() !!}
 		</div>
 	</div>
 @stop

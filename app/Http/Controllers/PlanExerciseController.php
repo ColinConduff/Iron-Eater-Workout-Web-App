@@ -37,17 +37,16 @@ class PlanExerciseController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Requests\PlanExerciseRequest $request)
     {
-        $exerciseIDs = $request->input('id');
+        $exerciseID = $request->input('id');
 
-        foreach($exerciseIDs as $exerciseID)
-        {
-            $planExercise = new PlanExercise;
-            $planExercise->exercise_id = $exerciseID;
-            $planExercise->plan_workout_id = $request->plan_workout_id;
-            $planExercise->save();
-        }
+        $planExercise = new PlanExercise;
+        $planExercise->exercise_id = $exerciseID[0];
+        $planExercise->plan_workout_id = $request->plan_workout_id;
+        $planExercise->weight_to_add_for_success = $request->weight_to_add_for_success;
+        $planExercise->weight_to_sub_for_fail  = $request->weight_to_sub_for_fail;
+        $planExercise->save();
 
         return redirect()->action('PlanController@createStep2', [$request->plan_id]);
     }
@@ -87,7 +86,7 @@ class PlanExerciseController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PlanExerciseRequest $request, $id)
     {
         $planExercise = PlanExercise::findOrFail($id);
 
@@ -95,7 +94,7 @@ class PlanExerciseController extends Controller
         $planExercise->exercise_id = $exerciseID[0];
         $planExercise->update($request->all());
 
-        return back();
+        return redirect()->action('PlanController@show', [$request->plan_id]);
     }
 
     /**
@@ -109,6 +108,6 @@ class PlanExerciseController extends Controller
         $planExercise = PlanExercise::findOrFail($id);
         $planExercise->delete();
 
-        return redirect()->action('PlanController@index');
+        return redirect()->action('PlanController@show', [$plan_id]);
     }
 }

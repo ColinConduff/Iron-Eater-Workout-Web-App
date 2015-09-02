@@ -9,52 +9,49 @@
 			<a href="{{ url('plans', [$plan->id, 'edit']) }}" class="btn">
 				<span class="glyphicon glyphicon-pencil"></span> Edit Plan
 			</a>
+			<a href="{{ action('PlanController@createStep2', [$plan->id]) }}" class="btn pull-right">
+				<span class="glyphicon glyphicon-plus"></span> Add Workouts, Exercises, and Sets
+			</a>
 			<h1 class="text-center">{{ $plan->title }}</h1>
 		</div>
 
 		<div class="well">
-			<h2>Calendar overview</h2>
-			<a href="{{ url('plans', [$plan->id, 'editDates']) }}" class="btn">
+			<a href="{{ url('planDates', [$plan->id, 'edit']) }}" class="btn">
 				<span class="glyphicon glyphicon-pencil"></span> Edit Dates
 			</a>
+
+			<a href="{{ action('PlanController@createStep3', [$plan->id]) }}" class="btn pull-right">
+				<span class="glyphicon glyphicon-plus"></span> Add Dates
+			</a>
+
+			{!! $calendar->calendar() !!}
+    		{!! $calendar->script() !!}
 		</div>
 
 		@if($plan->planWorkouts->count())
 			@foreach($plan->planWorkouts as $planWorkout)
-					<div class="well">
-					<div class="row">
-						<div class="col-sm-12">
-							<a href="{{ url('planWorkouts', [$planWorkout->id, 'edit']) }}" class="btn pull-right">
-								<span class="glyphicon glyphicon-pencil"></span> Edit Workout
-							</a>
-							<a href="" class="btn pull-right">
-								<span class="glyphicon glyphicon-plus"></span> Add Exercise
-							</a>
-						</div>
-						<div class="col-sm-12">
-							<h3 class="text-center">{{ $planWorkout->workout->title }} Workout</h3>
-						</div>
-					</div>
+				<div class="well">
+					<a href="{{ url('planWorkouts', [$planWorkout->id, 'edit']) }}" class="btn">
+						<span class="glyphicon glyphicon-pencil"></span> Edit Workout
+					</a>
+					<h3 class="text-center">{{ $planWorkout->workout->title }} Workout</h3>
 
 					@foreach($planWorkout->planExercises as $planExercise)
-						<div class="row">
-							<div class="col-sm-6">
-								<h4 class="text-center">{{ $planExercise->exercise->title }}</h4>
-							</div>
-							<div class="col-sm-6">
-								<a href="{{ url('planExercises', [$planExercise->id, 'edit']) }}" class="btn pull-right">
-									<span class="glyphicon glyphicon-pencil"></span> Edit Exercise
+						<div class="row text-center">
+							<div class="col-sm-4">
+								<h4 style="display:inline-block">{{ $planExercise->exercise->title }}</h4>
+								<a href="{{ url('planExercises', [$planExercise->id, 'edit']) }}" class="btn pull-left" style="display:inline-block">
+									<span class="glyphicon glyphicon-pencil"></span>
 								</a>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6 text-center">
+
+							<div class="col-sm-4">
 								@if($planExercise->weight_to_add_for_success)
 									<h5><span class="glyphicon glyphicon-plus"></span> {{ $planExercise->weight_to_add_for_success }} lbs for successful lift</h5>
 								@endif
 							</div>
 
-							<div class="col-sm-6 text-center">
+							<div class="col-sm-4">
 								@if($planExercise->weight_to_sub_for_fail)
 									<h5><span class="glyphicon glyphicon-minus"></span> {{ $planExercise->weight_to_sub_for_fail }} lbs for failed lift</h5>
 								@endif
@@ -81,9 +78,6 @@
 			        				<a href="{{ url('planSets', [$planExercise->planSets->first()->id, 'edit']) }}" class="btn pull-right">
 										<span class="glyphicon glyphicon-pencil"></span> Edit Sets
 									</a>
-									<a href="{{ url('planSets', [$planExercise->planSets->first()->id]) }}" class="btn pull-right">
-										<span class="glyphicon glyphicon-plus"></span> Add Sets
-									</a>
 								</div>
 		        			</div>
 		        		@endif
@@ -93,12 +87,6 @@
 				</div>
 			@endforeach
 		@endif
-
-		<div class="well">
-			<a href="" class="btn btn-primary btn-block">
-				Add Workout
-			</a>
-		</div>
 		
 	</div>
 @stop
