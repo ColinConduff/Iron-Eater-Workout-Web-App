@@ -1,13 +1,14 @@
 
 $('document').ready(function() {
   $('.thirtySec').on('click', function () {
-    $(this).addClass('hidden');
-    $(this).after('<button class="btn" id="thirtySecOutput"></button>');
-    
-    $('#thirtySecOutput').on('click', function () {
+    $('#timeBtn').addClass('hidden');
+    $('#timeBtn').after('<a class="btn btn-success btn-block" id="timeOutput"></a>');
+    $('#timerModal').modal('toggle');
+
+    $('#timeOutput').on('click', function () {
       clearInterval(interval);
-      $('.thirtySec').removeClass('hidden');
-      $('#thirtySecOutput').remove();
+      $('#timeBtn').removeClass('hidden');
+      $('#timeOutput').remove();
     });
     
     var start = new Date().getTime();
@@ -15,25 +16,26 @@ $('document').ready(function() {
         var now = 1000*30 - (new Date().getTime() - start);
         if( now > 0 ) 
         {
-          document.getElementById('thirtySecOutput').innerHTML = Math.floor(now / 1000);
+          document.getElementById('timeOutput').innerHTML = Math.floor(now / 1000);
         }
         else
         {
           clearInterval(interval);
-          $('.thirtySec').removeClass('hidden');
-          $('#thirtySecOutput').remove();
+          $('#timeBtn').removeClass('hidden');
+          $('#timeOutput').remove();
         }
       }, 100); 
   });
 
   $('.oneMin').on('click', function () {
-    $(this).addClass('hidden');
-    $(this).after('<button class="btn" id="oneMinOutput"></button>');
-    
-    $('#oneMinOutput').on('click', function () {
+    $('#timeBtn').addClass('hidden');
+    $('#timeBtn').after('<button class="btn btn-success btn-block" id="timeOutput"></button>');
+    $('#timerModal').modal('toggle');
+
+    $('#timeOutput').on('click', function () {
       clearInterval(interval);
-      $('.oneMin').removeClass('hidden');
-      $('#oneMinOutput').remove();
+      $('#timeBtn').removeClass('hidden');
+      $('#timeOutput').remove();
     });
     
     var start = new Date().getTime();
@@ -41,25 +43,26 @@ $('document').ready(function() {
         var now = 1000*60 - (new Date().getTime() - start);
         if( now > 0 ) 
         {
-          document.getElementById('oneMinOutput').innerHTML = Math.floor(now / 1000);
+          document.getElementById('timeOutput').innerHTML = Math.floor(now / 1000);
         }
         else
         {
           clearInterval(interval);
-          $('.oneMin').removeClass('hidden');
-          $('#oneMinOutput').remove();
+          $('#timeBtn').removeClass('hidden');
+          $('#timeOutput').remove();
         }
       }, 100); 
   });
 
   $('.twoMin').on('click', function () {
-    $(this).addClass('hidden');
-    $(this).after('<button class="btn" id="twoMinOutput"></button>');
-    
-    $('#twoMinOutput').on('click', function () {
+    $('#timeBtn').addClass('hidden');
+    $('#timeBtn').after('<button class="btn btn-success btn-block" id="timeOutput"></button>');
+    $('#timerModal').modal('toggle');
+
+    $('#timeOutput').on('click', function () {
       clearInterval(interval);
-      $('.twoMin').removeClass('hidden');
-      $('#twoMinOutput').remove();
+      $('#timeBtn').removeClass('hidden');
+      $('#timeOutput').remove();
     });
     
     var start = new Date().getTime();
@@ -67,13 +70,13 @@ $('document').ready(function() {
         var now = 1000*60*2 - (new Date().getTime() - start);
         if( now > 0 ) 
         {
-          document.getElementById('twoMinOutput').innerHTML = Math.floor(now / 1000);
+          document.getElementById('timeOutput').innerHTML = Math.floor(now / 1000);
         }
         else
         {
           clearInterval(interval);
-          $('.twoMin').removeClass('hidden');
-          $('#twoMinOutput').remove();
+          $('#timeBtn').removeClass('hidden');
+          $('#timeOutput').remove();
         }
       }, 100); 
   });

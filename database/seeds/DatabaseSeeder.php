@@ -109,42 +109,36 @@ class DatabaseSeeder extends Seeder
 
         $session1 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout1->id,
             'exercise_id' => $exercise1->id,
             'session_date' => Carbon::now()
         ]);
 
         $session2 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout1->id,
             'exercise_id' => $exercise2->id,
             'session_date' => Carbon::now()
         ]);
 
         $session3 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout2->id,
             'exercise_id' => $exercise3->id,
             'session_date' => Carbon::now()
         ]);
 
         $session4 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout2->id,
             'exercise_id' => $exercise4->id,
             'session_date' => Carbon::now()
         ]);
 
         $session5 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout3->id,
             'exercise_id' => $exercise5->id,
             'session_date' => Carbon::now()
         ]);
 
         $session6 = Session::create([
             'user_id' => $userTest->id,
-            'workout_id' => $workout3->id,
             'exercise_id' => $exercise6->id,
             'session_date' => Carbon::now()
         ]);

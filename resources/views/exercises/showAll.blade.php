@@ -2,6 +2,8 @@
 
 @section('content')
 	<div class="container text-center">
+		<div>@include('errors.list')</div>
+		
 		<div class="well"><h1>Exercises</h1></div>
 
 		<div class="panel panel-default">
@@ -72,7 +74,6 @@
 
 			<h2 class="text-center">Create A New Exercise</h2>
 
-			@include('errors.list')
 			{!! Form::open(['action' => 'ExerciseController@store']) !!}
 
 			<div class="form-group">

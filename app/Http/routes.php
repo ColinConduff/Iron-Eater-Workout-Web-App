@@ -21,6 +21,11 @@ Route::get('/home', function()
     return view('home');
 });
 
+Route::get('showLog', 'LogController@showLog');
+Route::get('editLog', 'LogController@editLog');
+Route::post('successfulLift', 'LogController@successfulLift');
+Route::post('failedLift', 'LogController@failedLift');
+
 Route::get('edit/{id}', [
 	'middleware' => 'auth', 
 	'uses' => 'DashboardController@edit'
@@ -29,11 +34,6 @@ Route::get('edit/{id}', [
 Route::get('dashboard', [
 	'middleware' => 'auth', 
 	'uses' => 'DashboardController@displayDashboard'
-]);
-
-Route::post('startNewWorkout', [
-	'middleware' => 'auth', 
-	'uses' => 'SessionController@startNewWorkout'
 ]);
 
 Route::get('exercises/titleAsc', [
@@ -67,6 +67,8 @@ Route::get('filterByWorkoutTitle/{id}', [
 	'uses' => 'SessionController@filterByWorkoutTitle'
 ]);
 
+Route::post('generateLogFromWK', 'SessionController@generateLogFromWK');
+
 Route::get('plans/createStep1', 'PlanController@createStep1');
 Route::get('plans/createStep2/{plan_id}', 'PlanController@createStep2');
 Route::get('plans/createStep3/{plan_id}', 'PlanController@createStep3');
@@ -85,7 +87,7 @@ Route::resource('planSets', 'PlanSetController',
 Route::resource('exercises', 'ExerciseController', 
 	['except' => ['create']]);
 Route::resource('workouts', 'WorkoutController', 
-	['except' => ['index','create']]);
+	['except' => ['create']]);
 Route::resource('sessions', 'SessionController', 
 	['except' => ['create']]);
 Route::resource('sessionSets', 'SessionSetController', 

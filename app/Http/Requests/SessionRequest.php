@@ -24,7 +24,6 @@ class SessionRequest extends Request
     public function rules()
     {
         return [
-            'workout_id' => 'required',
         ];
     }
 }

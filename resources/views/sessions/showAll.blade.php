@@ -50,14 +50,11 @@
 				<div class="panel-heading">
 				
 					<div class="row">
-						<div class="col-xs-12">
+						<div class="col-xs-6">
 							<h5><a href="{{ url('sessions', [$session->id]) }}" class="btn btn-default btn-block">{{ $session->exercise->title }}</a></h5>
 						</div>
 						<div class="col-xs-6">
-							<h4>{{ $session->workout->title }}</h5>
-						</div>
-						<div class="col-xs-6">
-							<h5><small>{{ date('F d g:i:s a', strtotime($session->session_date)) }}</small></h5>
+							<h5>{{ date('F d g:i a', strtotime($session->session_date)) }}</h5>
 						</div>
 					</div>
 				

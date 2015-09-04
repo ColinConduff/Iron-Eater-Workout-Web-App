@@ -18,11 +18,6 @@ class Session extends Model
 		return $this->belongsTo('App\User');
 	}
 
-    public function workout()
-	{
-		return $this->belongsTo('App\Workout');
-	}
-
 	public function exercise()
 	{
 		return $this->belongsTo('App\Exercise');

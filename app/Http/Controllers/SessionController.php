@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use DB;
+use App\PlanWorkout;
+use App\PlanExercise;
+use App\SessionSet;
 use App\Session;
 use App\Exercise;
 use App\Http\Requests;
@@ -30,7 +33,7 @@ class SessionController extends Controller
     public function index()
     {
         $sessions = Auth::user()->sessions()
-            ->with('workout', 'exercise', 'sessionSets')
+            ->with('exercise', 'sessionSets')
             ->orderBy('session_date', 'desc')
             ->paginate(10);
 
@@ -55,7 +58,7 @@ class SessionController extends Controller
     public function filterByExerciseTitle($exerciseID)
     {
         $sessions = Auth::user()->sessions()
-            ->with('workout', 'exercise', 'sessionSets')
+            ->with('exercise', 'sessionSets')
             ->where('exercise_id', '=', $exerciseID)
             ->orderBy('session_date', 'desc')
             ->paginate(5);
@@ -78,12 +81,12 @@ class SessionController extends Controller
         return redirect()->action('SessionController@filterByExerciseTitle', [$workoutID[0]]);
     }
 
-    public function filterByWorkoutTitle(Request $request)
+    public function filterByWorkoutTitle(Request $request) // This needs to be fixed
     {
         $workoutID = $request->input('id');
 
         $sessions = Auth::user()->sessions()
-            ->with('workout', 'exercise', 'sessionSets')
+            ->with('exercise', 'sessionSets')
             ->where('workout_id', '=', $workoutID)
             ->orderBy('session_date', 'desc')
             ->paginate(5);
@@ -99,15 +102,42 @@ class SessionController extends Controller
         return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return Response
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
+    /**
+     * 
+     *
+     * 
+     */
+    public function generateLogFromWK(Request $request)
+    {
+        $planExercises = PlanExercise::with('planSets')->where('plan_workout_id', '=', $request->input('id'))->get();
+
+        foreach($planExercises as $planExercise)
+        {
+            $session = new Session;
+            $session->exercise_id = $planExercise->exercise->id;
+            $session->session_date = Carbon::now();
+            Auth::user()->sessions()->save($session);
+
+            foreach($planExercise->planSets as $planSet)
+            {
+                $sessionSet = new SessionSet;
+                $sessionSet->session_id = $session->id;
+                $sessionSet->number_of_reps = $planSet->expected_reps;
+                $sessionSet->weight_lifted = $planSet->expected_weight;
+                $sessionSet->one_rep_max = $sessionSet->weight_lifted * 36 / (37 - $sessionSet->number_of_reps); 
+                $sessionSet->save();
+
+                $exercise = Auth::user()->exercises()->findOrFail($sessionSet->session->exercise_id);
+                if($sessionSet->one_rep_max > $exercise->best_one_rep_max)
+                {
+                    $exercise->best_one_rep_max = $sessionSet->one_rep_max;
+                    $exercise->save();
+                }
+            }
+        }
+
+        return redirect()->action('LogController@showLog'); 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -121,34 +151,12 @@ class SessionController extends Controller
         foreach($exerciseIDs as $exerciseID)
         {
             $session = new Session;
-            $session->workout_id = $request->workout_id;
             $session->exercise_id = $exerciseID;
             $session->session_date = Carbon::now();
             Auth::user()->sessions()->save($session);
         }
 
-        return redirect()->action('WorkoutController@show', ['id' => $session->workout_id]);
-    }
-
-    public function startNewWorkout(Request $request)
-    {
-        $exerciseIDs = DB::table('sessions')->distinct()
-            ->join('exercises', 'exercises.id', '=', 'sessions.exercise_id')
-            ->join('workouts', 'workouts.id', '=', 'sessions.workout_id')
-            ->where('sessions.workout_id', '=', $request->workout_id)
-            ->select('exercises.id')
-            ->get();
-
-        foreach($exerciseIDs as $exerciseID)
-        {
-            $session = new Session;
-            $session->workout_id = $request->workout_id;
-            $session->exercise_id = $exerciseID->id;
-            $session->session_date = Carbon::now();
-            Auth::user()->sessions()->save($session);
-        }
-
-        return redirect()->action('WorkoutController@show', ['id' => $request->workout_id]);
+        return redirect()->action('LogController@showLog');
     }
 
     /**
@@ -195,7 +203,7 @@ class SessionController extends Controller
 
         $session->update($request->all());
 
-        return redirect()->action('WorkoutController@show', ['id' => $request->workout_id]);
+        return redirect()->action('LogController@showLog');
     }
 
     /**
@@ -207,7 +215,6 @@ class SessionController extends Controller
     public function destroy($id)
     {
         $session = Auth::user()->sessions()->findOrFail($id);
-        $workoutID = $session->workout_id;
         $session->delete();
 
         return back();

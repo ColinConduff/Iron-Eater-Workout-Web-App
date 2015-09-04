@@ -3,8 +3,6 @@
 @section('content')
 
 	<div class="container text-center">
-	<div class="well"><h1>Session</h1></div>
-
 		<div class="panel panel-default text-center">
 			<div class="panel-heading">
 			<div class="row">
@@ -41,7 +39,9 @@
 		@endif
 		</div>
 
-		<a href="{{ url('sessions', [$session->id, 'edit']) }}" class="btn btn-danger btn-block">Edit</a>
+		<div class="well">
+			<a href="{{ url('sessions', [$session->id, 'edit']) }}" class="btn btn-danger btn-block">Edit</a>
+		</div>
 	
 	</div>
 

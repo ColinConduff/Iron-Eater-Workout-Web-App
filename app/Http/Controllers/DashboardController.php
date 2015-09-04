@@ -28,11 +28,8 @@ class DashboardController extends Controller
      */
     public function displayDashboard()
     {
-        $workouts = Auth::user()->workouts()->get();
+        // get calendar 
 
-        $workoutDeletables = Workout::select('workouts.id', 'workouts.title')
-            ->lists('title', 'id');
-
-        return view('dashboard', compact('workouts', 'workoutDeletables'));
+        return view('dashboard', compact('workouts'));
     }
 }

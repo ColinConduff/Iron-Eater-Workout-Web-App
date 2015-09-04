@@ -79,7 +79,7 @@ class SessionSetController extends Controller
                 $exercise->save();
             }
 
-        return redirect()->action('WorkoutController@show', ['id' => $request->workout_id]);
+        return redirect()->action('LogController@showLog');
     }
 
     /**
@@ -126,7 +126,7 @@ class SessionSetController extends Controller
                 $exercise->save();
             }
 
-        return redirect()->action('WorkoutController@show', ['id' => $sessionSet->session->workout_id]);
+        return back()->with('status', 'Successful Update!');
     }
 
     /**
@@ -138,10 +138,9 @@ class SessionSetController extends Controller
     public function destroy($id)
     {
         $sessionSet = SessionSet::findOrFail($id);
-        $workoutID = DB::table('sessions')->select('workout_id')->find($sessionSet->session_id);
         $sessionSet->delete();
 
-        return redirect()->action('WorkoutController@show', ['id' => $workoutID->workout_id]);
+        return back();
     }
 }
 

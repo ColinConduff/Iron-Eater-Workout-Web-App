@@ -18,6 +18,9 @@
     {!! Html::script('/assets/js/index.js') !!}
     {!! Html::style('/assets/vendor/fullcalendar/dist/fullcalendar.min.css') !!}
     {!! Html::script('/assets/vendor/fullcalendar/dist/fullcalendar.min.js') !!}
+    
+    {!! Html::style('/assets/vendor/tooltip-js/dist/tooltip.css') !!}
+    {!! Html::script('/assets/vendor/tooltip-js/dist/tooltip.min.js') !!}
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 </head>
@@ -39,7 +42,7 @@
       <div class="collapse navbar-collapse" id="collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-          <li><a href="">Log</a></li>
+          <li><a href="{{ url('/showLog') }}">Log</a></li>
           <li><a href="{{ url('/plans') }}">Plans</a></li>
           <li><a href="{{ url('/workouts') }}">Workouts</a></li>
           <li><a href="{{ url('/exercises') }}">Exercises</a></li>

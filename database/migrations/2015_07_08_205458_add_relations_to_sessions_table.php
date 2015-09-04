@@ -18,11 +18,6 @@ class AddRelationsToSessionsTable extends Migration
                   ->on('users')
                   ->onDelete('cascade');
 
-            $table->foreign('workout_id')
-                  ->references('id')
-                  ->on('workouts')
-                  ->onDelete('cascade');
-
             $table->foreign('exercise_id')
                   ->references('id')
                   ->on('exercises')
@@ -39,7 +34,6 @@ class AddRelationsToSessionsTable extends Migration
     {
         Schema::table('sessions', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-            $table->dropForeign(['workout_id']);
             $table->dropForeign(['exercise_id']);
         });
     }

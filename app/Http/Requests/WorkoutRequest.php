@@ -24,6 +24,7 @@ class WorkoutRequest extends Request
     public function rules()
     {
         return [
+            'title' => 'required'
         ];
     }
 }

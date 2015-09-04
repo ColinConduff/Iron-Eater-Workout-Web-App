@@ -31,9 +31,9 @@ class WorkoutController extends Controller
      */
     public function index()
     {
-        // $workouts = Auth::user()->workouts()->get();
+        $workouts = Auth::user()->workouts()->get();
 
-        // return view('workouts.showAll', compact('workouts'));
+        return view('workouts.showAll', compact('workouts'));
     }
 
     /**
@@ -57,7 +57,7 @@ class WorkoutController extends Controller
 
         Auth::user()->workouts()->save($workout);
 
-        return redirect()->action('WorkoutController@show', ['id' => $workout->id]);
+        return back();
     }
 
     /**
@@ -72,21 +72,21 @@ class WorkoutController extends Controller
 
         $workout = Auth::user()->workouts()->findOrFail($id);
 
-        $pastSessions = Session::with('exercise', 'sessionSets')
-            ->where('workout_id', '=', $workout->id)
-            ->where('session_date', '<', Carbon::today())
-            ->orderBy('session_date', 'desc')
-            ->paginate(4);
+        // $pastSessions = Session::with('exercise', 'sessionSets')
+        //     ->where('workout_id', '=', $workout->id)
+        //     ->where('session_date', '<', Carbon::today())
+        //     ->orderBy('session_date', 'desc')
+        //     ->paginate(4);
 
-        $currentSessions = Session::with('exercise', 'sessionSets')
-            ->where('workout_id', '=', $workout->id)
-            ->where('session_date', '>', Carbon::today())
-            ->orderBy('session_date', 'desc')
-            ->get();
+        // $currentSessions = Session::with('exercise', 'sessionSets')
+        //     ->where('workout_id', '=', $workout->id)
+        //     ->where('session_date', '>', Carbon::today())
+        //     ->orderBy('session_date', 'desc')
+        //     ->get();
 
-        $exercises = Auth::user()->exercises()
-            ->select('exercises.id', 'exercises.title')
-            ->lists('title', 'id');
+        // $exercises = Auth::user()->exercises()
+        //     ->select('exercises.id', 'exercises.title')
+        //     ->lists('title', 'id');
 
         return view('workouts.showOne', compact('workout', 'pastSessions', 'currentSessions', 'exercises'));
     }
@@ -101,15 +101,15 @@ class WorkoutController extends Controller
     {
         $workout = Auth::user()->workouts()->findOrFail($id);
 
-        $currentSessions = Session::with('exercise', 'sessionSets')
-            ->where('workout_id', '=', $workout->id)
-            ->where('session_date', '>', Carbon::today())
-            ->orderBy('session_date', 'desc')
-            ->get();
+        // $currentSessions = Session::with('exercise', 'sessionSets')
+        //     ->where('workout_id', '=', $workout->id)
+        //     ->where('session_date', '>', Carbon::today())
+        //     ->orderBy('session_date', 'desc')
+        //     ->get();
 
-        $exerciseList = Auth::user()->exercises()
-            ->select('exercises.id', 'exercises.title')
-            ->lists('title', 'id');
+        // $exerciseList = Auth::user()->exercises()
+        //     ->select('exercises.id', 'exercises.title')
+        //     ->lists('title', 'id');
 
         return view('workouts.edit', compact('workout', 'currentSessions', 'exerciseList'));
     }
@@ -140,6 +140,6 @@ class WorkoutController extends Controller
         $workout = Auth::user()->workouts()->findOrFail($id);
         $workout->delete();
 
-        return redirect()->action('DashboardController@displayDashboard');
+        return redirect()->action('WorkoutController@index');
     }
 }

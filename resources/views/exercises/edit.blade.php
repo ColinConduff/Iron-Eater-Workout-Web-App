@@ -2,14 +2,15 @@
 
 @section('content')
 	<div class="container">
-		<h1 class="text-center">Edit: {!! $exercise->title !!}</h1>
-
-		<a href="{{ url('exercises', [$exercise->id]) }}">Back</a>
+		<div>@include('errors.list')</div>
 		
-		<hr/>
+		<a href="{{ url('exercises', [$exercise->id]) }}">Back</a>
 
 		<div class="well">
-			@include('errors.list')
+			<h1 class="text-center">Edit: {!! $exercise->title !!}</h1>
+		</div>
+
+		<div class="well">
 
 			{!! Form::model($exercise, ['method' => 'PATCH', 'action' => ['ExerciseController@update', $exercise->id]]) !!}
 				<div class="form-group">
@@ -47,7 +48,10 @@
 
 
 		<div class="text-center well">
-			
+			{!! Form::open(array('url' => 'exercises/' . $exercise->id)) !!}
+                {!! Form::hidden('_method', 'DELETE') !!}
+                {!! Form::button('Delete Workout', array('type' => 'submit', 'class' => 'btn btn-block btn-danger')) !!}
+            {!! Form::close() !!}
         </div>
 	</div>
 @stop

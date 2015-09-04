@@ -6,7 +6,7 @@
 		@include('errors.list')
 
 		<div class="well">
-			<h1>Step 3: Add Dates</h1>
+			<h1 class="text-center">Step 3: Add Dates</h1>
 		</div>
 
 		<div class="well">

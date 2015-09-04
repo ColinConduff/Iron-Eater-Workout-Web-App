@@ -17,11 +17,6 @@ class Workout extends Model
 		return $this->belongsTo('App\User');
 	}
 
-    public function sessions()
-    {
-        return $this->hasMany('App\Session');
-    }
-
     public function planWorkouts()
     {
         return $this->hasMany('App\PlanWorkout');

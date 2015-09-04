@@ -5,13 +5,15 @@
 	<div class="container">
 		<div class="well text-center"><h1>Plans</h1></div>
 
-		<div class="well text-center">
-			@if(count($plans))
+		
+		@if(count($plans))
+			<div class="well text-center">
 				@foreach($plans as $plan)
 					<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-default btn-block">{{ $plan->title }}</a>
 				@endforeach
-			@endif
-		</div>
+			</div>
+		@endif
+		
 
 		<div class="well">
 			<a href="{{ url('plans/createStep1') }}" class="btn btn-primary btn-block">Create A New Plan</a>

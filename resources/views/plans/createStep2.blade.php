@@ -5,7 +5,7 @@
 	<div class="container">
 		@include('errors.list')
 
-		<div class="well">
+		<div class="well text-center">
 			<h1>Step 2: Customize {{ $plan->title }}</h1>
 		</div>
 
@@ -106,6 +106,8 @@
 
 					{!! Form::close() !!}
 				</div>
+
+				<hr>
 			@endforeach
 		@endif
 
@@ -122,6 +124,34 @@
 				<div class="form-group">
 					{!! Form::submit('Add Workouts', ['class' => 'btn btn-primary form-control']) !!}
 				</div>
+			{!! Form::close() !!}
+
+			<div class="hideWK">
+				<h2 class="text-center">Or</h2>
+
+				<button class="btn btn-default btn-primary btn-block createWkFormForPlan">
+					Create a New Workout
+				</button>
+			</div>
+		</div>
+
+		<div class="hidden well WkForm">
+			<h3 class="text-center">Create A New Workout</h3>
+
+			{!! Form::open(['url' => 'workouts']) !!}
+
+			<div class="form-group">
+				{!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title']) !!}
+			</div>
+
+			<div class="form-group">
+				{!! Form::textarea('note', null, ['class' => 'form-control', 'placeholder' => 'Note', 'rows' => 4]) !!}
+			</div>
+
+			<div class="form-group">
+				{!! Form::submit('Create Workout', ['class' => 'btn btn-primary form-control']) !!}
+			</div>
+
 			{!! Form::close() !!}
 		</div>
 

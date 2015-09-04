@@ -1,7 +1,9 @@
 @extends('app')
 
 @section('content')
-	<div class="container">		
+	<div class="container">	
+
+		<div>@include('errors.list')</div>	
 
 		@if(count($workouts))
 			<div class="well">
@@ -20,7 +22,6 @@
 
 		<div class="well hidden WkForm">
 			<h3 class="text-center">Create A New Workout</h3>
-			@include('errors.list')
 
 			{!! Form::open(['url' => 'workouts']) !!}
 
