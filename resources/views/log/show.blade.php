@@ -13,17 +13,22 @@
 
 		<div style="margin-bottom:1em; background-color:#337ab7; border-radius: 5px; padding:6px 12px;" class="text-center">
 			<div class="row">	
-				<div class="col-xs-4">
+				<div class="col-xs-3">
 					<a class="btn btn-default btn-block" id="timeBtn" data-toggle="modal" data-target="#timerModal">
 						<span class="glyphicon glyphicon-time"></span>
 					</a>
 				</div>
-				<div class="col-xs-4">
+				<div class="col-xs-3">
+					<a class="btn btn-default btn-block" data-toggle="modal" data-target="#noteModal">
+						<span class="glyphicon glyphicon-book"></span>
+					</a>
+				</div>
+				<div class="col-xs-3">
 					<a href="{{ url('editLog') }}" class="btn btn-default btn-block">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</a>
 				</div>
-				<div class="col-xs-4">
+				<div class="col-xs-3">
 					<a class="btn btn-default btn-block" data-toggle="modal" data-target="#createLogModal">
 						<span class="glyphicon glyphicon-plus"></span>
 					</a>
@@ -35,12 +40,62 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-body">
-						<a class="btn btn-default thirtySec" style="width:10em;">30 Sec</a>
-						<a class="btn btn-default oneMin" style="width:10em;">1 Min</a>
-						<a class="btn btn-default twoMin" style="width:10em;">2 Min</a> 
+						<a class="btn btn-default btn-block thirtySec">30 Sec</a>
+						<a class="btn btn-default btn-block oneMin">1 Min</a>
+						<a class="btn btn-default btn-block twoMin">2 Min</a> 
+						<a class="btn btn-default btn-block threeMin">3 Min</a> 
+						<a class="btn btn-default btn-block fourMin">4 Min</a>
+						<a class="btn btn-default btn-block fiveMin">5 Min</a>  
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					@if(count($planWorkout))	
+						<div class="modal-header text-center">
+							<h1>
+								<a href="{{ url('workouts', [$planWorkout->workout_id]) }}">
+									{{ $planWorkout->title }}
+								</a>
+							</h1>
+						</div>
+						
+						<div class="modal-body">
+							{!! Form::model($planWorkout, ['method' => 'PATCH', 'action' => ['WorkoutController@update', $planWorkout->workout_id]]) !!}
+								<div hidden=true class="form-group">
+									{!! Form::text('title', $planWorkout->title, ['class' => 'form-control']) !!}
+								</div>
+
+								<div class="form-group">
+									{!! Form::textarea('note', $planWorkout->note, ['class' => 'form-control', 'rows' => 4]) !!}
+								</div>
+
+								<div class="form-group">
+									{!! Form::submit('Save Note', ['class' => 'btn btn-primary form-control']) !!}
+								</div>
+							{!! Form::close() !!} 
+						</div>
+					@else
+						<div class="modal-header text-center">
+							<h1>No Workout to Display</h1>
+						</div>
+
+						<div class="modal-body text-center">
+							<h3>
+								Please schedule a workout for today within a plan
+							    and then generate a log
+							</h3>
+						</div>
+					@endif
+					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -107,45 +162,49 @@
 					<div class="panel-heading" style="background-color:#E6E6E6">
 						<div class="row">
 							<div class="col-xs-3">
+								@if(count($planWorkout))
+									{!! Form::open(['url' => 'successfulLift']) !!}
 
-								{!! Form::open(['url' => 'successfulLift']) !!}
+										<div hidden=true class="form-group">
+											{!! Form::text('plan_workout_id', $planWorkout->id, ['class' => 'form-control']) !!}
+										</div>
 
-									<div hidden=true class="form-group">
-										{!! Form::text('plan_workout_id', $planWorkout->id, ['class' => 'form-control']) !!}
-									</div>
+										<div hidden=true class="form-group">
+											{!! Form::text('exercise_title', $session->exercise->title, ['class' => 'form-control']) !!}
+										</div>
 
-									<div hidden=true class="form-group">
-										{!! Form::text('exercise_title', $session->exercise->title, ['class' => 'form-control']) !!}
-									</div>
+										<div class="form-group">
+											{!! Form::button('<span class="glyphicon glyphicon-ok"></span>', ['type' => 'submit', 'class' => 'btn btn-success btn-block form-control']) !!}
+										</div>
 
-									<div class="form-group col-sm-12 col-xs-4">
-										{!! Form::button('<span class="glyphicon glyphicon-ok"></span>', ['type' => 'submit', 'class' => 'btn btn-success btn-block form-control']) !!}
-									</div>
-
-								{!! Form::close() !!}
-
+									{!! Form::close() !!}
+								@endif
 							</div>
+
 							<div class="col-xs-6">
 								<a href="{{ url('exercises', [$session->exercise->id]) }}" class="btn btn-block">
 									{{ $session->exercise->title }}
 								</a>
 							</div>
+
 							<div class="col-xs-3">
-								{!! Form::open(['url' => 'failedLift']) !!}
+								@if(count($planWorkout))
+									{!! Form::open(['url' => 'failedLift']) !!}
 
-									<div hidden=true class="form-group">
-										{!! Form::text('plan_workout_id', $planWorkout->id, ['class' => 'form-control']) !!}
-									</div>
+										<div hidden=true class="form-group">
+											{!! Form::text('plan_workout_id', $planWorkout->id, ['class' => 'form-control']) !!}
+										</div>
 
-									<div hidden=true class="form-group">
-										{!! Form::text('exercise_title', $session->exercise->title, ['class' => 'form-control']) !!}
-									</div>
+										<div hidden=true class="form-group">
+											{!! Form::text('exercise_title', $session->exercise->title, ['class' => 'form-control']) !!}
+										</div>
 
-									<div class="form-group col-sm-12 col-xs-4">
-										{!! Form::button('<span class="glyphicon glyphicon-remove"></span>', ['type' => 'submit', 'class' => 'btn btn-danger btn-block form-control']) !!}
-									</div>
+										<div class="form-group">
+											{!! Form::button('<span class="glyphicon glyphicon-remove"></span>', ['type' => 'submit', 'class' => 'btn btn-danger btn-block form-control']) !!}
+										</div>
 
-								{!! Form::close() !!}
+									{!! Form::close() !!}
+								@endif
 							</div>
 						</div>
 					</div>

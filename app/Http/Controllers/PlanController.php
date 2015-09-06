@@ -49,7 +49,8 @@ class PlanController extends Controller
 
         $calendar = \Calendar::addEvents($events) //add an array with addEvents
             ->setOptions([ //set fullcalendar options
-                'firstDay' => 1
+                'header' =>  ['left' => 'prev', 'center' => 'title', 'right' => 'next']
+            ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
             ]); 
 
         return view('plans.showAll', compact('plans', 'calendar'));
@@ -128,7 +129,8 @@ class PlanController extends Controller
 
         $calendar = \Calendar::addEvents($events) //add an array with addEvents
             ->setOptions([ //set fullcalendar options
-                'firstDay' => 1
+                'header' =>  ['left' => 'prev', 'center' => 'title', 'right' => 'next']
+            ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
             ]); 
 
         return view('plans.createStep3', compact('plan', 'calendar'));
@@ -161,7 +163,8 @@ class PlanController extends Controller
 
         $calendar = \Calendar::addEvents($events) //add an array with addEvents
             ->setOptions([ //set fullcalendar options
-                'firstDay' => 1
+                'header' =>  ['left' => 'prev', 'center' => 'title', 'right' => 'next']
+            ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
             ]); 
 
         return view('plans.showOne', compact('plan', 'calendar'));

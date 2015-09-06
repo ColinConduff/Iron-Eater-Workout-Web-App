@@ -68,27 +68,9 @@ class WorkoutController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user(); // not necessary?
-
         $workout = Auth::user()->workouts()->findOrFail($id);
 
-        // $pastSessions = Session::with('exercise', 'sessionSets')
-        //     ->where('workout_id', '=', $workout->id)
-        //     ->where('session_date', '<', Carbon::today())
-        //     ->orderBy('session_date', 'desc')
-        //     ->paginate(4);
-
-        // $currentSessions = Session::with('exercise', 'sessionSets')
-        //     ->where('workout_id', '=', $workout->id)
-        //     ->where('session_date', '>', Carbon::today())
-        //     ->orderBy('session_date', 'desc')
-        //     ->get();
-
-        // $exercises = Auth::user()->exercises()
-        //     ->select('exercises.id', 'exercises.title')
-        //     ->lists('title', 'id');
-
-        return view('workouts.showOne', compact('workout', 'pastSessions', 'currentSessions', 'exercises'));
+        return view('workouts.showOne', compact('workout'));
     }
 
     /**
@@ -101,17 +83,7 @@ class WorkoutController extends Controller
     {
         $workout = Auth::user()->workouts()->findOrFail($id);
 
-        // $currentSessions = Session::with('exercise', 'sessionSets')
-        //     ->where('workout_id', '=', $workout->id)
-        //     ->where('session_date', '>', Carbon::today())
-        //     ->orderBy('session_date', 'desc')
-        //     ->get();
-
-        // $exerciseList = Auth::user()->exercises()
-        //     ->select('exercises.id', 'exercises.title')
-        //     ->lists('title', 'id');
-
-        return view('workouts.edit', compact('workout', 'currentSessions', 'exerciseList'));
+        return view('workouts.edit', compact('workout'));
     }
 
     /**
@@ -126,7 +98,7 @@ class WorkoutController extends Controller
 
         $workout->update($request->all());
 
-        return redirect()->action('WorkoutController@show', ['id' => $workout->id]);
+        return back();
     }
 
     /**

@@ -16,11 +16,13 @@
 			</div>
 		@endif
 
-		<div class="well hideWell">
-			<button class="btn btn-default btn-primary btn-block createWkForm">Create a New Workout</button>
+		<div class="well">
+			<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#createWk">
+				Create a New Workout
+			</button>
 		</div>
 
-		<div class="well hidden WkForm">
+		<div class="well collapse" id="createWk">
 			<h3 class="text-center">Create A New Workout</h3>
 
 			{!! Form::open(['url' => 'workouts']) !!}

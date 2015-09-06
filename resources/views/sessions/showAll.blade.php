@@ -9,38 +9,19 @@
 
 		<div class="row">@include('errors.list')</div>
 		
-		<div class="row">
-			<div class="col-sm-6">
 			{{-- Exercise filter form --}}
 			
-				{!! Form::open(['action' => 'SessionController@sendExerciseID']) !!}
+			{!! Form::open(['action' => 'SessionController@sendExerciseID']) !!}
 
-				<div class="form-group">
-				    {!! Form::select('id[]', $exerciseList, null, ['class' => 'form-control', 'style' => 'width:100%']) !!}
-				</div>
-
-				<div class="form-group">
-					{!! Form::submit('Filter by Exercise', ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-
-				{!! Form::close() !!}
+			<div class="form-group">
+			    {!! Form::select('id[]', $exerciseList, null, ['class' => 'form-control', 'style' => 'width:100%']) !!}
 			</div>
 
-			<div class="col-sm-6">
-			{{-- Workout filter form --}}
-				{!! Form::open(['action' => 'SessionController@sendWorkoutID']) !!}
-
-				<div class="form-group">
-				    {!! Form::select('id[]', $workoutList, null, ['class' => 'form-control', 'style' => 'width:100%']) !!}
-				</div>
-
-				<div class="form-group">
-					{!! Form::submit('Filter by Workout', ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-
-				{!! Form::close() !!}
+			<div class="form-group">
+				{!! Form::submit('Filter by Exercise', ['class' => 'btn btn-primary form-control']) !!}
 			</div>
-		</div>
+
+			{!! Form::close() !!}
 
 	</div>
 
@@ -82,6 +63,10 @@
 			</div>
 		@endforeach
 		{!! $sessions->render() !!}
+	@else 
+		<div class="well text-center">
+			<h5>No results to show...</h5>
+		</div>
 	@endif
 	</div>
 

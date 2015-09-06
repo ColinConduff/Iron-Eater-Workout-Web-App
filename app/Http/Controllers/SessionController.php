@@ -74,34 +74,6 @@ class SessionController extends Controller
         return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
     }
 
-    public function sendWorkoutID(Request $request)
-    {
-        $workoutID = $request->input('id');
-
-        return redirect()->action('SessionController@filterByExerciseTitle', [$workoutID[0]]);
-    }
-
-    public function filterByWorkoutTitle(Request $request) // This needs to be fixed
-    {
-        $workoutID = $request->input('id');
-
-        $sessions = Auth::user()->sessions()
-            ->with('exercise', 'sessionSets')
-            ->where('workout_id', '=', $workoutID)
-            ->orderBy('session_date', 'desc')
-            ->paginate(5);
-
-        $exerciseList = Auth::user()->exercises()
-            ->select('exercises.id', 'exercises.title')
-            ->lists('title', 'id');
-
-        $workoutList = Auth::user()->workouts()
-            ->select('workouts.id', 'workouts.title')
-            ->lists('title', 'id');
-
-        return view('sessions.showAll', compact('sessions', 'exerciseList', 'workoutList'));
-    }
-
     /**
      * 
      *
@@ -125,14 +97,14 @@ class SessionController extends Controller
                 $sessionSet->number_of_reps = $planSet->expected_reps;
                 $sessionSet->weight_lifted = $planSet->expected_weight;
                 $sessionSet->one_rep_max = $sessionSet->weight_lifted * 36 / (37 - $sessionSet->number_of_reps); 
+                $sessionSet->failed = 0;
                 $sessionSet->save();
 
                 $exercise = Auth::user()->exercises()->findOrFail($sessionSet->session->exercise_id);
-                if($sessionSet->one_rep_max > $exercise->best_one_rep_max)
-                {
-                    $exercise->best_one_rep_max = $sessionSet->one_rep_max;
-                    $exercise->save();
-                }
+                $bestOneRepMax = SessionSet::join('sessions', 'sessions.id', '=', 'session_sets.session_id')
+                    ->where('sessions.exercise_id', '=', $exercise->id)
+                    ->max('one_rep_max');
+                $exercise->update(['best_one_rep_max' => $bestOneRepMax]);
             }
         }
 

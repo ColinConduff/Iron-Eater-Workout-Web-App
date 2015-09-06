@@ -43,8 +43,12 @@
 				</div>
 			</div>
 		@else
-			<div class="well">
-				<h2>You may have forgotten to add workouts to your plan...</h2>
+			<div class="well text-center">
+				<h5>You may have forgotten to add workouts to your plan...</h5>
+
+				<a href="{{ url('plans', ['createStep2', $plan->id]) }}" class="btn btn-primary">
+					Back to Step 2
+				</a>
 			</div>
 		@endif
 

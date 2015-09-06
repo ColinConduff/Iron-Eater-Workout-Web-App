@@ -58,15 +58,6 @@ Route::get('filterByExerciseTitle/{id}', [
 	'uses' => 'SessionController@filterByExerciseTitle'
 ]);
 
-Route::post('filterByWorkoutTitle', [
-	'middleware' => 'auth', 
-	'uses' => 'SessionController@sendWorkoutID'
-]);
-Route::get('filterByWorkoutTitle/{id}', [
-	'middleware' => 'auth', 
-	'uses' => 'SessionController@filterByWorkoutTitle'
-]);
-
 Route::post('generateLogFromWK', 'SessionController@generateLogFromWK');
 
 Route::get('plans/createStep1', 'PlanController@createStep1');
@@ -83,6 +74,8 @@ Route::resource('planExercises', 'PlanExerciseController',
 	['except' => ['create']]);
 Route::resource('planSets', 'PlanSetController', 
 	['except' => ['create']]);
+Route::resource('bodyweights', 'BodyweightController', 
+	['except' => ['create']]);
 
 Route::resource('exercises', 'ExerciseController', 
 	['except' => ['create']]);
@@ -92,6 +85,7 @@ Route::resource('sessions', 'SessionController',
 	['except' => ['create']]);
 Route::resource('sessionSets', 'SessionSetController', 
 	['except' => ['index','create','show','edit']]);
+Route::resource('users', 'UserController');
 
 // Authentication routes... 
 Route::get('auth/login', 'Auth\AuthController@getLogin');

@@ -4,6 +4,14 @@
 	<div class="container">
 		<div>@include('errors.list')</div>
 
+		<div>
+			@if (session('status'))
+			    <div class="alert alert-danger text-center">
+			        {{ session('status') }}
+			    </div>
+			@endif
+		</div>
+
 		<a href="{{ url('showLog') }}" class="btn btn-default btn-block" style="margin-bottom:1em">
 			Return to Log
 		</a>
@@ -67,6 +75,10 @@
 						@endforeach
 					@endif
 				@endforeach
+			</div>
+		@else
+			<div class="well text-center">
+				<h2>You don't appear to have any sessions to edit</h2>
 			</div>
 		@endif
 	</div>

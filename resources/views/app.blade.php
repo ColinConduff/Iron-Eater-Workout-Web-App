@@ -47,7 +47,7 @@
           <li><a href="{{ url('/workouts') }}">Workouts</a></li>
           <li><a href="{{ url('/exercises') }}">Exercises</a></li>
           <li><a href="{{ url('/sessions') }}">Workout History</a></li>
-          <li><a href="">Settings</a></li>
+          <li><a href="{{ url('/bodyweights') }}">Body Weight Tracker</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

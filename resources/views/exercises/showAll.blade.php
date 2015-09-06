@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container text-center">
 		<div>@include('errors.list')</div>
-		
+
 		<div class="well"><h1>Exercises</h1></div>
 
 		<div class="panel panel-default">
@@ -66,11 +66,13 @@
 			</div>
 		</div>
 
-		<div class="well hideWell">
-			<button class="btn btn-default btn-primary btn-block createExForm">Create a New Exercise</button>
+		<div class="well">
+			<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#createEx">
+				Create a New Exercise
+			</button>
 		</div>
 
-		<div class="well hidden exForm">
+		<div class="well collapse" id="createEx">
 
 			<h2 class="text-center">Create A New Exercise</h2>
 

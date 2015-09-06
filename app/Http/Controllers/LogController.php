@@ -35,12 +35,20 @@ class LogController extends Controller
             ->orderBy('session_date', 'desc')
             ->get();
 
+        $user = Auth::user();
+
+        // Exercises added to a log after a log was generated with a plan will have 
+        // access to buttons for successfulLift and failedLift, even though that 
+        // exercise is not in a plan. If they click those buttons they will send 
+        // an incorrect planWorkout->id to those functions.
         $planWorkout = PlanWorkout::join('workouts', 'workouts.id', '=', 'plan_workouts.workout_id')
             ->join('plan_exercises', 'plan_workouts.id', '=', 'plan_exercises.plan_workout_id')
             ->join('exercises', 'exercises.id', '=', 'plan_exercises.exercise_id')
             ->join('sessions', 'exercises.id', '=', 'sessions.exercise_id')
             ->where('session_date', '>', Carbon::today())
-            ->select('plan_workouts.id', 'workouts.title', 'workouts.note')
+            ->join('plans', 'plans.id', '=', 'plan_workouts.plan_id')
+            ->where('plans.user_id', '=', $user->id)
+            ->select('plan_workouts.id', 'plan_workouts.workout_id', 'workouts.title', 'workouts.note')
             ->first();
 
         $todaysWorkoutList = Auth::user()->plans()
@@ -74,7 +82,8 @@ class LogController extends Controller
      */
     public function editLog()
     {
-        $currentSessions = Session::with('exercise', 'sessionSets')
+        $currentSessions = Auth::user()->sessions()
+            ->with('exercise', 'sessionSets')
             ->where('session_date', '>', Carbon::today())
             ->orderBy('session_date', 'desc')
             ->get();
@@ -87,6 +96,7 @@ class LogController extends Controller
     }
 
     /**
+     * 
      */
     public function successfulLift(Request $request)
     {
@@ -99,17 +109,27 @@ class LogController extends Controller
             ->with('planSets')
             ->first();
 
-        foreach($planExercise->planSets as $planSet)
+        // If there is not a planExercise associated with the planWorkout send back error message
+        if(count($planExercise))
         {
-            $planSet->update(['expected_weight' 
-                => $planSet->expected_weight + $planExercise->weight_to_add_for_success]);
+            foreach($planExercise->planSets as $planSet)
+            {
+                $planSet->update(['expected_weight' 
+                    => $planSet->expected_weight + $planExercise->weight_to_add_for_success]);
+            }
+
+            $message = 'Successful Lift! ' . $planExercise->weight_to_add_for_success . 
+                ' pounds added to future planned sets of ' . 
+                $planExercise->title;
+
+            return back()->with('status', $message);
         }
+        else
+        {
+            $message = 'Sorry, there is no plan associated with ' . $planExercise->title . ' to update.' ;
 
-        $message = 'Successful Lift! ' . $planExercise->weight_to_add_for_success . 
-            ' pounds added to future planned sets of ' . 
-            $planExercise->title;
-
-        return back()->with('status', $message);
+            return back()->with('status', $message);
+        }
     }
 
     /**
@@ -125,16 +145,26 @@ class LogController extends Controller
             ->with('planSets')
             ->first();
 
-        foreach($planExercise->planSets as $planSet)
+        // If there is not a planExercise associated with the planWorkout send back error message
+        if(count($planExercise))
         {
-            $planSet->update(['expected_weight' 
-                => $planSet->expected_weight - $planExercise->weight_to_sub_for_fail]);
+            foreach($planExercise->planSets as $planSet)
+            {
+                $planSet->update(['expected_weight' 
+                    => $planSet->expected_weight - $planExercise->weight_to_sub_for_fail]);
+            }
+
+            $message = 'Failed Lift! ' . $planExercise->weight_to_sub_for_fail . 
+                ' pounds subtracted from future planned sets of ' . 
+                $planExercise->title;
+
+            return redirect('editLog')->with('status', $message);
         }
+        else
+        {
+            $message = 'Sorry, there is no plan associated with ' . $planExercise->title . ' to update.' ;
 
-        $message = 'Failed Lift! ' . $planExercise->weight_to_sub_for_fail . 
-            ' pounds subtracted from future planned sets of ' . 
-            $planExercise->title;
-
-        return back()->with('status', $message);
+            return back()->with('status', $message);
+        }
     }
 }

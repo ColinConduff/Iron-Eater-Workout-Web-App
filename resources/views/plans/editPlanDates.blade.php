@@ -41,6 +41,7 @@
 										{!! Form::submit('Update Date', ['class' => 'btn btn-primary form-control']) !!}
 									</div>
 								{!! Form::close() !!}
+								
 								{!! Form::open(array('url' => 'planDates/' . $planDate->id)) !!}
 						            {!! Form::hidden('_method', 'DELETE') !!}
 						            {!! Form::button('Delete', array('type' => 'submit', 'class' => 'btn btn-danger', 'style' => 'width:100%')) !!}

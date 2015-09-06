@@ -126,16 +126,16 @@
 				</div>
 			{!! Form::close() !!}
 
-			<div class="hideWK">
+			<div>
 				<h2 class="text-center">Or</h2>
 
-				<button class="btn btn-default btn-primary btn-block createWkFormForPlan">
+				<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#createWk">
 					Create a New Workout
 				</button>
 			</div>
 		</div>
 
-		<div class="hidden well WkForm">
+		<div class="well collapse" id="createWk">
 			<h3 class="text-center">Create A New Workout</h3>
 
 			{!! Form::open(['url' => 'workouts']) !!}
@@ -154,12 +154,6 @@
 
 			{!! Form::close() !!}
 		</div>
-
-		<script>
-			$('#workout_list').select2({
-				placeholder: 'Choose Workouts'
-			});
-		</script>
 
 		<div class="well">
 			<a href="{{ url('plans/createStep3', [$plan->id]) }}" class="btn btn-primary btn-block">

@@ -60,24 +60,22 @@ class SessionSetController extends Controller
     public function store(Requests\SessionSetRequest $request)
     {
         $sessionSet = new SessionSet;
-        
         $sessionSet->session_id = $request->session_id;
         $sessionSet->number_of_reps = $request->number_of_reps;
         $sessionSet->weight_lifted = $request->weight_lifted;
         $sessionSet->one_rep_max = $this->calculateOneRepMax($sessionSet->weight_lifted, $sessionSet->number_of_reps);
+        $sessionSet->failed = 0;
         $sessionSet->save();
 
-        $session = Auth::user()->sessions()->findOrFail($sessionSet->session_id);
-
         // refactor this code; create function in ExerciseController to update exercise
-            $exercise = Auth::user()->exercises()->findOrFail($session->exercise_id);
 
-            $oneRepMax = $sessionSet->one_rep_max;
-            if($oneRepMax > $exercise->best_one_rep_max)
-            {
-                $exercise->best_one_rep_max = $oneRepMax;
-                $exercise->save();
-            }
+            $exercise = Auth::user()->exercises()->findOrFail($sessionSet->session->exercise_id);
+
+            $bestOneRepMax = SessionSet::join('sessions', 'sessions.id', '=', 'session_sets.session_id')
+                ->where('sessions.exercise_id', '=', $exercise->id)
+                ->max('one_rep_max');
+
+            $exercise->update(['best_one_rep_max' => $bestOneRepMax]);
 
         return redirect()->action('LogController@showLog');
     }
@@ -114,17 +112,27 @@ class SessionSetController extends Controller
     {
         $sessionSet = SessionSet::with('session.exercise')->findOrFail($id);
         $sessionSet->one_rep_max = $this->calculateOneRepMax($request->weight_lifted, $request->number_of_reps);
+        
+        // If the user is updating the weight and reps with lower values, 
+        // then they likely failed the set (especially if the set was 
+        // generated from a plan).  However, if it was not generated from a plan
+        // this could be an incorrect assumption...
+        if($request->weight_lifted < $sessionSet->weight_lifted or $request->number_of_reps < $sessionSet->number_of_reps)
+        {
+            $sessionSet->update(['failed' => 1]);
+        }
+
         $sessionSet->update($request->all());
 
-        // refactor this code; create function in ExerciseController to update exercise
+        // refactor this code; create function in ExerciseController to update exercise best_one_rep_max
+
             $exercise = Auth::user()->exercises()->findOrFail($sessionSet->session->exercise_id);
 
-            $oneRepMax = $sessionSet->one_rep_max;
-            if($oneRepMax > $exercise->best_one_rep_max)
-            {
-                $exercise->best_one_rep_max = $oneRepMax;
-                $exercise->save();
-            }
+            $bestOneRepMax = SessionSet::join('sessions', 'sessions.id', '=', 'session_sets.session_id')
+                ->where('sessions.exercise_id', '=', $exercise->id)
+                ->max('one_rep_max');
+
+            $exercise->update(['best_one_rep_max' => $bestOneRepMax]);
 
         return back()->with('status', 'Successful Update!');
     }
