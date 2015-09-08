@@ -18,12 +18,28 @@
 			<div class="well text-center">
 				<div class="row">	
 					<div class="col-xs-8">
-					<h3>User: {{ $user->name }}</h3>
+						<h5>Height: {{ floor($user->height_inches / 12) }} feet, {{ $user->height_inches % 12 }} inches</h5>
 					</div>
 					<div class="col-xs-4">
-					<h5>Height: {{ floor($user->height_inches / 12) }} feet, {{ $user->height_inches % 12 }} inches</h5>
+						<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#heightForm">Update Height</button>
 					</div>
 				</div>
+			</div>
+			<div class="well collapse" id="heightForm">
+				{!! Form::model($user, ['method' => 'PATCH', 'action' => ['UserController@update', $user->id]]) !!}
+
+				<div class="form-group">
+					{!! Form::label('height_inches', 'Height in Inches:') !!}
+				    {!! Form::number('height_inches', $user->height_inches, ['class' => 'form-control','placeholder' => 'Height in Inches', 'style' => 'width:100%']) !!}
+				</div>
+
+				<div class="form-group">
+					{!! Form::submit('Update Height', ['class' => 'btn btn-primary form-control']) !!}
+				</div>
+
+				{!! Form::close() !!}
+			</div>
+			<div class="well text-center">
 				@if(count($bodyweights))
 					<div class="row">	
 						<div class="col-xs-3">
@@ -33,7 +49,7 @@
 							<h4>BMI</h4>
 						</div>
 						<div class="col-xs-3">
-							<h4>Recorded at</h4>
+							<h4>Recorded On</h4>
 						</div>
 						<div class="col-xs-3">
 							<h4>Edit</h4>
@@ -49,7 +65,7 @@
 								<h5>{{ $bodyweight->bmi }}</h5>
 							</div>
 							<div class="col-xs-3">
-								<h5>{{ $bodyweight->updated_at }}</h5>
+								<h5>{{ date('F d, Y', strtotime($bodyweight->updated_at)) }}</h5>
 							</div>
 							<div class="col-xs-3">
 								<button class="btn btn-info" data-toggle="collapse" data-target="#update{{ $index }}">
@@ -83,30 +99,8 @@
 			</div>
 
 			<div class="well">
-				<div class="row">
-					<div class="col-xs-6">
-						<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#heightForm">Update Height</button>
-					</div>
-					<div class="col-xs-6">
-						<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#weightForm">New Body Weight</button>
-					</div>
-				</div>
+				<button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#weightForm">New Body Weight</button>
 			</div>
-
-			<div class="well collapse" id="heightForm">
-				{!! Form::model($user, ['method' => 'PATCH', 'action' => ['UserController@update', $user->id]]) !!}
-
-				<div class="form-group">
-				    {!! Form::number('height_inches', $user->height_inches, ['class' => 'form-control','placeholder' => 'Height in Inches', 'style' => 'width:100%']) !!}
-				</div>
-
-				<div class="form-group">
-					{!! Form::submit('Update Height', ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-
-				{!! Form::close() !!}
-			</div>
-
 
 			<div class="well collapse" id="weightForm">
 				{!! Form::open(['url' => 'bodyweights']) !!}
