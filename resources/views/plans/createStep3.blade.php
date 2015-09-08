@@ -5,8 +5,9 @@
 	<div class="container">
 		@include('errors.list')
 
-		<div class="well">
-			<h1 class="text-center">Step 3: Add Dates</h1>
+		<div class="well text-center">
+			<h4>Create a Plan</h4>
+			<h3><small>Step 3: </small>Select Dates</h3>
 		</div>
 
 		<div class="well">
@@ -18,7 +19,7 @@
 			<div class="well">
 				<div class="row">
 					@foreach($plan->planWorkouts as $planWorkout)
-						<div class="col-xs-4">
+						<div class="col-sm-4 col-xs-6">
 							<h3 class="text-center">{{ $planWorkout->workout->title }}</h3>
 							
 							{!! Form::open(['url' => 'planDates']) !!}
@@ -53,7 +54,7 @@
 		@endif
 
 		<div class="well">
-			<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-block btn-primary">
+			<a href="{{ url('plans', [$plan->id]) }}" class="btn btn-block btn-success">
 				Finish Creating Plan
 			</a>
 		</div>
