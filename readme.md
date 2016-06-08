@@ -1,7 +1,6 @@
 # Iron Eater Weight Lifting App
 
-## Demo
-https://iron-eater-workout-web-app.herokuapp.com
+## Note: This project is no longer being actively developed. Please see SpartanLog-Laravel for a more recent Laravel project.
 
 ## Summary 
 * Users can add exercises and workouts
